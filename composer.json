@@ -1,0 +1,24 @@
+{
+  "name": "Graphiques-Digitale/SilverstripeReconMetadata",
+  "description": "Advanced SEO control via the Silverstripe CMS",
+  "type": "silverstripe-module",
+  "homepage": "http://github.com/Graphiques-Digitale/SilverstripeReconMetadata",
+  "keywords": ["silverstripe", "SEO", "metadata"],
+  "license": "GNU-GPL-v2",
+  "authors": [
+    {"name": "Atari","email": "atari@graphiques.co.za"}
+  ],
+  "support": {
+    "issues": "http://github.com/Graphiques-Digitale/SilverstripeReconMetadata/issues"
+  },
+  "require": {
+    "silverstripe/cms": "~3.1",
+    "silverstripe/framework": "~3.1"
+  },
+  "extra": {
+    "installer-name": "SilverstripeReconMetadata",
+    "screenshots": [
+      "composer-screenshot.png"
+    ]
+  }
+}
