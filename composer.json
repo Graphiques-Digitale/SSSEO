@@ -1,6 +1,6 @@
 {
   "name": "Graphiques-Digitale/SilverstripeReconMetadata",
-  "description": "Advanced SEO control via the Silverstripe CMS",
+  "description": "Advanced metadata configuration & output for the Silverstripe CMS",
   "type": "silverstripe-module",
   "homepage": "http://github.com/Graphiques-Digitale/SilverstripeReconMetadata",
   "keywords": ["silverstripe", "SEO", "metadata"],
