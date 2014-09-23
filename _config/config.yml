@@ -1,0 +1,11 @@
+SiteConfig:
+  extensions:
+    - 'ReconMetadata_SiteConfigExtension'
+
+LeftAndMain:
+  extensions:
+    - 'ReconMetadata_CMSMainExtension'
+
+SiteTree:
+  extensions:
+    - 'ReconMetadata_SiteTreeExtension'
