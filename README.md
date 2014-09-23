@@ -4,22 +4,23 @@ SilverstripeReconMetadata
 This is a module for use with the Silverstripe framework & CMS v3.1.*
 
 It allows the addition of Open Graph, Twitter Cards, Schema.org, Google Plus & Facebook Application information onto Pages.
-The configuration is fine-grained & all options can be turned on & off.
-There are a few hierarchical inheritance models available, for whatever reason - Single, Multiple & SiteConfig.
-There are a few further metadata helper functions to keep the front-end template as clean as possible - Charset, BaseHref, Title & Favicon.
 
-And there are many further enhancements to be made, but feedback is a good way to get a feature prioritised :)
+The configuration is fine-grained & all options can be turned on & off.
+
+There are a few hierarchical inheritance models available, for whatever reason - Single, Multiple & SiteConfig.
+
+There are a few further metadata helper functions to keep the front-end template as clean as possible - Charset, BaseHref, Title & Favicon.
 
 1. Usage
 
 	Your Page.ss should look something like this:
 
 	<code>
-	<head $ReconMetadataItemscope>
+	< head $ReconMetadataItemscope>
 		$ReconMetadata
 		// all other headers
-	</head>
-	<body...
+	</ head>
+	< body...
 	</code>
 
     This should immediately follow the opening head tag, especially so if you are using Charset or Basehref.
