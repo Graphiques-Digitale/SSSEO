@@ -3,7 +3,7 @@ SilverstripeReconMetadata
 
 This is a module for use with the Silverstripe framework & CMS v3.1.*
 
-It is meant to provide a conprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages.
+It is meant to provide a comprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages.
 
 It allows the addition of Open Graph, Twitter Cards, Schema.org, Google Plus & Facebook Application information.
 
@@ -12,6 +12,8 @@ The configuration is fine-grained & all options can be turned on & off.
 There are a few hierarchical inheritance models available, for whatever reason - namely: *Single*, *Multiple* & *SiteConfig*.
 
 There are a few further metadata helper functions to keep the front-end template as clean as possible - *Charset*, *BaseHref*, *Title* & *Favicon*.
+
+![Screenshot](composer-screenshot.png)
 
 ## 1. Installation
 
@@ -27,7 +29,7 @@ Visit *Settings* in the CMS to configure.
 
 Your Page.ss should look something like this:
 
-```HTML
+```
 <head $ReconMetadataItemscope()>
 	$ReconMetadata()
 	// all other headers...
@@ -36,9 +38,9 @@ Your Page.ss should look something like this:
 <body...etc...
 ```
 
-*ReconMetadata()* should immediately follow the opening head tag, especially if you are using *Charset* or *Basehref*.
+*ReconMetadata()* should immediately follow the opening head tag, especially if you are using *Charset*.
 
-Don't forget to forget to remove all references in your templates to whichever tags you use.
+Don't forget to forget to remove all references in your templates to all tags which are enabled.
 
 And remember to bash the cache and debug the output to be sure!
 
@@ -50,7 +52,7 @@ Depending on the inheritance model used, there can be a further *Defaults* panel
 
 And there is a further help panel for easy access.
 
-Each *Page* will be extended with the values necessary to display the metadata, but will only have active values displayed in the CMS to reduce clutter.
+Each *Page* will be extended with the values necessary to display the metadata, but will only have active values displayed in the CMS to reduce clutter & hopefully confuse content editors less.
 
 ## 4. Inheritance
 
