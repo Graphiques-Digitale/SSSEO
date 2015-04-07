@@ -21,15 +21,13 @@ Remember to **~/dev/build/?flush=ALL** if any changes are made to the YAML file!
 
 ## 3. Template Usage
 
-Remove extraneous metadata from you *Page.ss templates.
+Remove extraneous metadata from you ***Page.ss** templates.
 
-Insert:
+Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present, insert:
 
 > $Metadata()
 
-Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present.
-
-And, Bob's your uncle :)'
+And, Bob's your uncle :)
 
 ## 4. Extensions
 
