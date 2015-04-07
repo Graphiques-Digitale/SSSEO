@@ -3,7 +3,7 @@ SSSEO v1
 
 This is a module for use with the SilverStripe v3.1.* framework & CMS
 
-It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages - for idiots.
+It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages - for geniuses.!.
 
 Best practises nonsense - check!
 
@@ -86,6 +86,10 @@ By default, all core modules should be included, these are:
 > SSSEO_Core_SiteTree_DataExtension
 
 This will enable the bulk of the default functionality pertaining to HTML metadata: **meta charset**, **meta title**, **meta description**, **rel="canonical"**, **favicon ICO + PNG** and **custom metadata**.
+
+These guys all have on/off statuses and can be toggled via SiteConfig - a.k.a. `~/admin/settings/`
+
+The subsequent functionality is mostly *include*-based, as additional database tables are written and functionality is inherently implicit, so it&apos; your call - Mr Jekyll, or Dr Hyde :P
 
 ### 4.2. Open Graph
 
