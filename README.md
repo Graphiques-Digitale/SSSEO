@@ -25,9 +25,13 @@ Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 Remove extraneous metadata from your `$ThemeDir/templates/*Page.ss` templates.
 
-Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present, simply call:
+Call `$Metadata()` just below the opening `&lt;head&gt;` tag and `$BaseHref()` function, e.g.
 
-`$Metadata()`
+```html
+<head>
+$BaseHref()
+$Metadata()
+```
 
 And, Bob's your uncle :)
 
