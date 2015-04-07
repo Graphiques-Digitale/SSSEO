@@ -25,15 +25,53 @@ Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 Remove extraneous metadata from your `$ThemeDir/templates/*Page.ss` templates.
 
-Call `$Metadata()` just below the opening `&lt;head&gt;` tag and `$BaseHref()` function, e.g.
+Call `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
 
 ```html
 <head>
 $BaseHref()
 $Metadata()
+<!-- Any further includes -->
+</head>
 ```
 
-And, Bob's your uncle :)
+Will output something along the lines of:
+
+```html
+<head>
+$BaseHref()
+<!-- SSSEO -->
+<meta charset="UTF-8" />
+<link rel="canonical" href="http://ssseo.silverstripe.org/" />
+<title>SSSEO | Home - lost is now found</title>
+<link rel="icon" href="http://ssseo.silverstripe.org/assets/SSSEO/logo.png" />
+<!--[if IE]><link rel="shortcut icon" href="/favicon.ico" /><![endif]-->
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="http://ssseo.silverstripe.org/assets/SSSEO/logo.png" />
+<meta name="description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
+<!-- Authorship -->
+<link rel="author" href="https://plus.google.com/117742154027027247296/" />
+<link rel="publisher" href="https://plus.google.com/117742154027027247296/" />
+<meta property="article:author" content="907920240" />
+<meta property="article:publisher" content="907920240" />
+<!-- Open Graph -->
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="SSSEO" />
+<meta property="og:url" content="http://ssseo.silverstripe.org/" />
+<meta property="og:title" content="Hello :)" />
+<meta property="og:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
+<meta property="og:image" content="http://ssseo.silverstripe.org/assets/SSSEO/OpenGraph/test.jpg" />
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="SSSEO" />
+<meta name="twitter:url" content="http://ssseo.silverstripe.org/" />
+<meta name="twitter:title" content="There ;P" />
+<meta name="twitter:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
+<meta name="twitter:image" content="http://ssseo.silverstripe.org/assets/SSSEO/TwitterCards/test.jpg" />
+<!-- end SSSEO --->
+<!-- Any further includes -->
+</head>
+```
 
 ## 4. Extensions
 
