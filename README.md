@@ -23,7 +23,7 @@ Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 ## 3. Template Usage
 
-Remove extraneous metadata from your `$ThemeDir/templates/*Page.ss` templates.
+Remove extraneous metadata from your `$ThemeDir()/templates/*Page.ss` templates.
 
 Call `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
 
@@ -85,7 +85,7 @@ By default, all core modules should be included, these are:
 
 > SSSEO_Core_SiteTree_DataExtension
 
-This will enable the bulk of the default functionality pertaining to HTML metadata: **meta charset**, **meta title**, **rel="canonical"**, **favicon ICO + PNG** and **custom metadata**.
+This will enable the bulk of the default functionality pertaining to HTML metadata: **meta charset**, **meta title**, **meta description**, **rel="canonical"**, **favicon ICO + PNG** and **custom metadata**.
 
 ### 4.2. Open Graph
 
