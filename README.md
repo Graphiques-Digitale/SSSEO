@@ -5,27 +5,29 @@ This is a module for use with the Silverstripe framework & CMS v3.1.*
 
 It is meant to provide a comprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages.
 
-It uses as many **best practises** as possible, while also trying to be as **browser compatible** possible, but this is never an exact science...
+Best practises nonsense.
+
+Browser compatibility nonsense.
 
 ![Screenshot](composer-screenshot.png)
 
 ## 1. Installation
 
-Place the SSSEO folder in your SilverStripe root and run **~/dev/build/?flush=ALL**.
+Place the SSSEO folder in your SilverStripe root and run `~/dev/build/?flush=ALL`.
 
 ## 2. Configuration
 
-Configuration is modular and managed via extensions in the **~/SSSEO/_config/config.yml** file.
+Configuration is modular and managed via extensions in the `~/SSSEO/_config/config.yml` file.
 
-Remember to **~/dev/build/?flush=ALL** if any changes are made to the YAML file!
+Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 ## 3. Template Usage
 
-Remove extraneous metadata from your **Page.ss** templates.
+Remove extraneous metadata from your `$ThemeDir/templates/*Page.ss` templates.
 
-Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present, insert:
+Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present, simply call:
 
-> $Metadata()
+`$Metadata()`
 
 And, Bob's your uncle :)
 
@@ -41,7 +43,7 @@ By default, all core modules should be included, these are:
 
 > SSSEO_Core_SiteTree_DataExtension
 
-This will enable the bulk of the **'default'** functionality pertaining to HTML metadata: character sets, titles, rel="canonical", favicon.ico and custom metadata.
+This will enable the bulk of the default functionality pertaining to HTML metadata: **meta charset**, **meta title**, **rel="canonical"**, **favicon ICO + PNG** and **custom metadata**.
 
 ### 4.2. Open Graph
 
@@ -49,7 +51,7 @@ To include Open Graph functionality, include:
 
 > SSSEO_OpenGraph_SiteTree_DataExtension
 
-@note: only type **'article'** is supported for now, more types coming in future versions.
+@note: only type **_article_** is supported for now, more types coming in future versions.
 
 ### 4.4. Twitter Cards
 
@@ -73,6 +75,6 @@ To include Twitter Cards functionality, include:
 
 ### 4.7. Authorship
 
-Authorship functionality involves **rel="author"** and **rel="publisher"**, as well as Open Graph functionality (**article:author** and **article:publisher**) if the Open Graph submodule is enabled.
+Authorship functionality involves **rel="author"** and **rel="publisher"**, as well as Open Graph functionality (**article:author** and **article:publisher**) if the Open Graph extension is enabled.
 
 @note: further functionality regarding published and edited dates and times to be added.
