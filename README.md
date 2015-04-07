@@ -27,7 +27,7 @@ Insert:
 
 > $Metadata()
 
-Just below the opening &lt;head$gt; tag, and below **$BaseHref()** if present.
+Just below the opening **&lt;head&gt;** tag, and below **$BaseHref()** if present.
 
 And, Bob's your uncle :)'
 
