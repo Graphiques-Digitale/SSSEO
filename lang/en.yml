@@ -1,0 +1,23 @@
+en:
+  SSSEO_SiteConfig_DataExtension:
+# Configuration
+#    ConfigurationTab: 'Configuration'
+# Charset
+#    CharsetStatus: 'Character Set'
+# Canonical
+#    CanonicalStatus: 'Canonical Page Links'
+# Title
+#    TitleStatus: 'Title'
+##    TitleTab: 'Title'
+#    Title: 'Title'
+#    TitleSeparator: 'Title Separator'
+#    Tagline: 'Tagline'
+#    TaglineSeparator: 'Tagline Seprator'
+#    TitlePosition: 'Title Position'
+#    FaviconStatus: 'Favicon'
+#    ExtraMetaStatus: 'Custom Metadata'
+# Favicon
+#    FaviconStatus: 'Favicon'
+##    FaviconTab: 'Favicon'
+#    FaviconICO: 'Favicon ICO'
+#    FaviconPNG: 'Favicon PNG'

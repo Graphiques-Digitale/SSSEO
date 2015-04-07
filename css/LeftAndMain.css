@@ -30,3 +30,20 @@
 	width: 510px;
 	margin-left: 184px;
 }
+
+
+/*** NEW VERSION ***/
+
+.cms-edit-form .field .success,
+.cms-edit-form .ui-tabs-nav .success a {
+	color: green;
+}
+
+.cms-edit-form .field .error,
+.cms-edit-form .ui-tabs-nav .error a {
+	color: red;
+}
+
+.cms-edit-form pre {
+	font: 10px monospace; 
+}

@@ -1,11 +1,25 @@
 SiteConfig:
   extensions:
-    - 'ReconMetadata_SiteConfigExtension'
+    - 'SSSEO_Core_SiteConfig_DataExtension'
+    - 'SSSEO_Authorship_SiteConfig_DataExtension'
 
 LeftAndMain:
   extensions:
-    - 'ReconMetadata_CMSMainExtension'
+    - 'SSSEO_Core_LeftAndMain_DataExtension'
+
+Member:
+  extensions:
+    - 'SSSEO_Authorship_Member_DataExtension'
 
 SiteTree:
   extensions:
-    - 'ReconMetadata_SiteTreeExtension'
+    - 'SSSEO_Core_SiteTree_DataExtension'
+    - 'SSSEO_Authorship_SiteTree_DataExtension'
+    - 'SSSEO_OpenGraph_SiteTree_DataExtension'
+    - 'SSSEO_TwitterCards_SiteTree_DataExtension'
+# @todo
+#    - 'SSSEO_SchemaDotOrg_SiteTree_DataExtension'
+#    - 'SSSEO_FacebookApp_SiteTree_DataExtension'
+#    - 'SSSEO_AppleTouchIcon_SiteTree_DataExtension'
+
+# after adding or removing modules remember to run: /dev/build/?flush=ALL
