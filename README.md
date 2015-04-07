@@ -1,9 +1,63 @@
-SilverstripeReconMetadata
-=========================
+SSSEO v1
+========
 
 This is a module for use with the Silverstripe framework & CMS v3.1.*
 
-It is meant to provide a comprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages.
+It is meant to provide a comprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages. It uses as many *best practises* as possible, while also trying to be *browser compatible*.
+
+![Screenshot](composer-screenshot.png)
+
+## 1. Installation
+
+Place the SSSEO folder in your SilverStripe root and run **/dev/build/?flush=ALL**.
+
+## 2. Configuration
+
+Configuration is modular and managed via extensions in the *~/SSSEO/_config/config.yml* file.
+
+## 3. Modules
+
+### 3.1. Core ( HTML Metadata )
+
+By default, all core modules should be included, these are:
+
+> SSSEO_Core_SiteConfig_DataExtension
+> SSSEO_Core_LeftAndMain_DataExtension
+> SSSEO_Core_SiteTree_DataExtension
+
+This will enable the bulk of the "default" functionality pertaining to HTML metadata: character sets, titles, rel="canonical", favicon.ico and custom metadata.
+
+### 3.2. Open Graph
+
+To include Open Graph functionality, include:
+
+> SSSEO_OpenGraph_SiteTree_DataExtension
+
+@note: only type **article** is supported for now, more types coming in further versions.
+
+### 3.3. Twitter Cards
+
+To include Twitter Cards functionality, include:
+
+> SSSEO_TwitterCards_SiteTree_DataExtension
+
+@note: only type **summary** is supported for now, more types coming in further versions.
+
+### 3.4. Schema.org
+
+@note: to be implemented in future versions.
+
+### 3.5. Facebook Application
+
+@note: to be implemented in future versions.
+
+### 3.6. Apple Touch Icons + Android rel="icon"
+
+@note: to be implemented in future versions.
+
+
+*** END ***
+
 
 It allows the addition of Open Graph, Twitter Cards, Schema.org, Google Plus & Facebook Application information.
 
