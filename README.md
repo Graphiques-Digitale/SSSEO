@@ -1,13 +1,13 @@
 SSSEO v1
 ========
 
-This is a module for use with the Silverstripe framework & CMS v3.1.*
+This is a module for use with the SilverStripe v3.1.* framework & CMS
 
-It is meant to provide a comprehensive-as-you-need, not-too-intimidating interface for adding extended metadata to pages.
+It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages - for idiots.
 
-Best practises nonsense.
+Best practises nonsense - check!
 
-Browser compatibility nonsense.
+Browser compatibility nonsense - check!
 
 ![Screenshot](composer-screenshot.png)
 
@@ -31,7 +31,7 @@ Call `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` functio
 <head>
 $BaseHref()
 $Metadata()
-<!-- Any further includes -->
+<!-- ++ any further includes -->
 </head>
 ```
 
@@ -69,7 +69,7 @@ Will output something along the lines of:
 <meta name="twitter:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <meta name="twitter:image" content="http://ssseo.silverstripe.org/assets/SSSEO/TwitterCards/test.jpg" />
 <!-- end SSSEO -->
-<!-- Any further includes -->
+<!-- ++ any further includes -->
 </head>
 ```
 
@@ -101,7 +101,7 @@ To include Twitter Cards functionality, include:
 
 > SSSEO_TwitterCards_SiteTree_DataExtension
 
-@note: only type **'summary'** is supported for now, more types coming in future versions.
+@note: only type **_summary_** is supported for now, more types coming in future versions.
 
 ### 4.4. Schema.org
 
