@@ -39,7 +39,7 @@ Will output something along the lines of:
 
 ```html
 <head>
-$BaseHref()
+<base href="http://ssseo.silverstripe.org/">
 <!-- SSSEO -->
 <meta charset="UTF-8" />
 <link rel="canonical" href="http://ssseo.silverstripe.org/" />
@@ -68,7 +68,7 @@ $BaseHref()
 <meta name="twitter:title" content="There ;P" />
 <meta name="twitter:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <meta name="twitter:image" content="http://ssseo.silverstripe.org/assets/SSSEO/TwitterCards/test.jpg" />
-<!-- end SSSEO --->
+<!-- end SSSEO -->
 <!-- Any further includes -->
 </head>
 ```

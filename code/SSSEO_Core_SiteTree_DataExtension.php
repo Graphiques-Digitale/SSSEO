@@ -178,7 +178,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		}
 
 		// end
-		$metadata .= '<!-- end SSSEO --->' . PHP_EOL;
+		$metadata .= '<!-- end SSSEO -->' . PHP_EOL;
 
 		// return
 		return $metadata;
