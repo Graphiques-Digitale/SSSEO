@@ -75,9 +75,13 @@ Will output something along the lines of:
 
 ## 4. Extensions
 
+Apart from **_Core_**, all submodules should be included on an as-needed basis, as a result of extra database fields being created.
+
+Less is more...
+
 ### 4.1. Core ( HTML Metadata )
 
-By default, all core modules should be included, these are:
+All core submodules should be included, these are:
 
 > SSSEO_Core_SiteConfig_DataExtension
 
@@ -85,11 +89,9 @@ By default, all core modules should be included, these are:
 
 > SSSEO_Core_SiteTree_DataExtension
 
-This will enable the bulk of the default functionality pertaining to HTML metadata: **meta charset**, **meta title**, **meta description**, **rel="canonical"**, **favicon ICO + PNG** and **custom metadata**.
+This will enable the bulk of the default functionality pertaining to HTML metadata: **_meta charset_**, **_meta title_**, **_meta description_**, **_rel="canonical"_**, **_favicon ICO + PNG_** and **_custom metadata_**.
 
-These guys all have on/off statuses and can be toggled via SiteConfig - a.k.a. `~/admin/settings/`
-
-The subsequent functionality is mostly *include*-based, as additional database tables are written and functionality is inherently implicit, so it&apos; your call - Mr Jekyll, or Dr Hyde :P
+These can be toggled on or off via SiteConfig @ `~/admin/settings/ > SSSEO`
 
 ### 4.2. Open Graph
 
@@ -121,6 +123,6 @@ To include Twitter Cards functionality, include:
 
 ### 4.7. Authorship
 
-Authorship functionality involves **rel="author"** and **rel="publisher"**, as well as Open Graph functionality (**article:author** and **article:publisher**) if the Open Graph extension is enabled.
+Authorship functionality involves **_rel="author"_** and **_rel="publisher"_**, as well as Open Graph functionality - **_article:author_** and **_article:publisher_** - if the Open Graph extension is enabled.
 
 @note: further functionality regarding published and edited dates and times to be added.
