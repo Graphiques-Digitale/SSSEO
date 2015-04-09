@@ -5,7 +5,7 @@ This is a module for use with the SilverStripe v3.1.* framework & CMS
 
 It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages, based largely on [18 Meta Tags Every Webpage Should Have in 2013][1], including some additional enhancements with _Favicons_ and _Touch Icons_.
 
-Also, a good higher-level over view, [5 tips for SEO with Silverstripe 3][2]
+Also, a good overview: [5 tips for SEO with Silverstripe 3][2]
 
 Best practises nonsense - check!
 
@@ -43,19 +43,24 @@ Will output something along the lines of:
 <head>
 <base href="http://ssseo.silverstripe.org/">
 <!-- SSSEO -->
+<!-- HTML -->
 <meta charset="UTF-8" />
 <link rel="canonical" href="http://ssseo.silverstripe.org/" />
 <title>SSSEO | Home - lost is now found</title>
+<meta name="description" content="A &amp;quot;description&amp;quot; with &amp;#039;both&amp;#039; quotes in &amp;amp; some | other &amp;lt;nonsense&amp;gt;" />
+<!-- Favicon -->
 <link rel="icon" href="http://ssseo.silverstripe.org/assets/SSSEO/logo.png" />
 <!--[if IE]><link rel="shortcut icon" href="/favicon.ico" /><![endif]-->
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="msapplication-TileImage" content="http://ssseo.silverstripe.org/assets/SSSEO/logo.png" />
-<meta name="description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <!-- Authorship -->
-<link rel="author" href="https://plus.google.com/117742154027027247296/" />
-<link rel="publisher" href="https://plus.google.com/117742154027027247296/" />
-<meta property="article:author" content="907920240" />
-<meta property="article:publisher" content="907920240" />
+<link rel="author" href="https://plus.google.com/$GoogleAuthorID/" />
+<link rel="publisher" href="https://plus.google.com/$GooglePublisherID/" />
+<meta property="article:author" content="$FacebookAuthorID" />
+<meta property="article:publisher" content="$GooglePublisherID" />
+<!-- Facebook Insights -->
+<meta property="fb:app_id" content="asdasdasd" />
+<meta property="fb:admins" content="$FacebookAuthorID" />
 <!-- Open Graph -->
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="SSSEO" />
@@ -77,9 +82,7 @@ Will output something along the lines of:
 
 ## 4. Extensions
 
-Apart from **_Core_**, all submodules should be included on an as-needed basis, as a result of extra database fields being created.
-
-Less is more...
+Apart from **_Core_**, all submodules should be included on an as-needed basis. This is as a result of extra database fields being created and wanting to keep functionality as lean as possible.
 
 ### 4.1. Core ( HTML Metadata )
 
@@ -97,7 +100,11 @@ This will enable the bulk of the default functionality pertaining to HTML metada
 
 These can be toggled on or off via SiteConfig @ `~/admin/settings/ > SSSEO`
 
-Google+ and Facebook Profile IDs for publishers and authors is included here, because it made the most sense, it's only 2 additional fields and they are needed in multiple submodules. @note: I'm already rethinking this approach again, as I have already changed it twice :(
+Google+ and Facebook Profile IDs for publishers and authors is included here, because it made the most sense, it's only 2 additional fields and they are needed in multiple submodules. @note: I'm already rethinking this approach again, and I have already changed it twice :(
+
+Title inspiration: [http://moz.com/learn/seo/title-tag][3]
+
+Favicon inpiration: [audreyr/favicon-cheat-sheet][4] [Jonathan T. Neal - Understand the Favicon][5] [High Quality Visuals for Pinned Sites in Windows 8][6]
 
 ### 4.2. Facebook Insights (a.k.a. Facebook Application)
 
@@ -109,6 +116,8 @@ To enable Facebook Insights functionality, include:
 
 This will allow the addition of a Facebook `fb:app_id` and `fb:admins` in SiteConfig.
 
+[Facebook - Domain Insights][7]
+
 ### 4.3. Open Graph
 
 To enable Open Graph functionality, include:
@@ -116,6 +125,8 @@ To enable Open Graph functionality, include:
 > SSSEO_OpenGraph_SiteTree_DataExtension
 
 Only supports type **_article_** for the moment.
+
+[The Open Graph protocol][8]
 
 ### 4.4. Twitter Cards
 
@@ -125,23 +136,25 @@ To enable Twitter Cards functionality, include:
 
 Only supports type **_summary_** for the moment.
 
+[Twitter Cards - Overview][9]
+
 ### 4.5. Schema.org
 
-@note: to be implemented in future versions.
+_@note: to be implemented in future versions._
 
 ### 4.6. Apple Touch Icons + Android rel="icon"
 
-@note: to be implemented in future versions.
+_@note: to be implemented in future versions._
 
 [Everything you always wanted to know about touch icons][10]	
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
 [2]: http://www.silverstripe.org/blog/5-tips-for-seo-with-silverstripe-3-/
-[3]: none
-[4]: none
-[5]: none
-[6]: none
-[7]: none
-[8]: none
-[9]: none
+[3]: http://moz.com/learn/seo/title-tag
+[4]: https://github.com/audreyr/favicon-cheat-sheet
+[5]: http://www.jonathantneal.com/blog/understand-the-favicon/
+[6]: http://blogs.msdn.com/b/ie/archive/2012/06/08/high-quality-visuals-for-pinned-sites-in-windows-8.aspx
+[7]: https://developers.facebook.com/docs/platforminsights/domains
+[8]: http://ogp.me
+[9]: https://dev.twitter.com/cards/overview
 [10]: Everything you always wanted to know about touch icons
