@@ -191,13 +191,11 @@ _@note: improve itemscope embedding process, but without using JS, how..?_
 
 ## 4. Short-term @TODO
 
-> Complete implementation of charset encoding (UTF-16)
-
 > PHPDoc the code :(
 
 > More help and links in the CMS interface, specifically linking to image documentation
 
-> Expand all social media types
+> Expand the social media types
 
 ---
 
