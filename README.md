@@ -183,11 +183,21 @@ $Metadata()
 </head>
 ```
 
-This will output the correct **_itemscope_** or **_type_** into the head tag.
+This will output the correct Schama.org **_itemscope_** into the head tag.
 
 _@note: improve itemscope embedding process, but without using JS, how..?_
 
 [Google+ Web Snippet][10]
+
+## 4. Short-term @TODO
+
+> Complete implementation of charset encoding (UTF-16)
+
+> PHPDoc the code :(
+
+> More help and links in the CMS interface, specifically linking to image documentation
+
+> Expand all social media **_types_**
 
 ---
 
