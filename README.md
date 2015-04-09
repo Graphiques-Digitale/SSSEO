@@ -59,14 +59,14 @@ Will output something along the lines of:
 <meta property="article:author" content="$FacebookAuthorID" />
 <meta property="article:publisher" content="$GooglePublisherID" />
 <!-- Facebook Insights -->
-<meta property="fb:app_id" content="asdasdasd" />
+<meta property="fb:app_id" content="0123456789" />
 <meta property="fb:admins" content="$FacebookAuthorID" />
 <!-- Open Graph -->
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="SSSEO" />
 <meta property="og:url" content="http://ssseo.silverstripe.org/" />
 <meta property="og:title" content="Hello :)" />
-<meta property="og:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
+<meta property="og:description" content="This can be overridden, or it will default to &#039;&lt;meta name=&quot;description&quot;&#039;... /&gt;" />
 <meta property="og:image" content="http://ssseo.silverstripe.org/assets/SSSEO/OpenGraph/test.jpg" />
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
@@ -75,6 +75,12 @@ Will output something along the lines of:
 <meta name="twitter:title" content="There ;P" />
 <meta name="twitter:description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <meta name="twitter:image" content="http://ssseo.silverstripe.org/assets/SSSEO/TwitterCards/test.jpg" />
+<!-- Schema.org -->
+<meta itemprop="name" content="Home" />
+<meta itemprop="description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
+<meta itemprop="image" content="http://ssseo.silverstripe.org/assets/SSSEO/SchemaDotOrg/test.jpg" />
+<!-- Extra Metadata --->
+<meta name="keywords" content="HTML,CSS,XML,JavaScript"><meta name="random" content="1, 2, 3...">
 <!-- end SSSEO -->
 <!-- ++ any further includes -->
 </head>
@@ -156,7 +162,7 @@ $Metadata()
 </head>
 ```
 
-This will output the correct **_itemscope_** or _type_ into the head tag.
+This will output the correct **_itemscope_** or **_type_** into the head tag.
 
 _@note: improve itemscope embedding process, but without using JS, how..?_
 
