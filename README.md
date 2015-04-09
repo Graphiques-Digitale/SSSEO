@@ -131,7 +131,7 @@ To enable Touch Icon functionality, include:
 
 > SSSEO_TouchIcon_SiteConfig_DataExtension
 
-This will add every conceivable (yet relevant) touch icon.
+This will allow the addition of a Touch Icon in SiteConfig, and output it in a billion (sadly necessary) formats.
 
 Touch icons inspired by: [Everything you always wanted to know about touch icons][11]
 
@@ -139,7 +139,7 @@ Touch icons inspired by: [Everything you always wanted to know about touch icons
 
 To enable Facebook Insights functionality, include:
 
-> SSSEO_FacebookInsights_Memeber_DataExtension
+> SSSEO_FacebookInsights_Member_DataExtension
 
 > SSSEO_FacebookInsights_SiteConfig_DataExtension
 
@@ -193,13 +193,11 @@ _@note: improve itemscope embedding process, but without using JS, how..?_
 
 > Complete implementation of charset encoding (UTF-16)
 
-> **_PHPDoc_** the code :(
+> PHPDoc the code :(
 
 > More help and links in the CMS interface, specifically linking to image documentation
 
-> Expand all social media **_types_**
-
-> **_PHP Composer_**
+> Expand all social media types
 
 ---
 
