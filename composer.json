@@ -1,15 +1,15 @@
 {
-  "name": "Graphiques-Digitale/SilverstripeReconMetadata",
-  "description": "Advanced metadata configuration & output for the Silverstripe CMS",
+  "name": "Graphiques-Digitale/SSSEO",
+  "description": "Advanced metadata configuration & output for the Silverstripe v3.1 CMS & framework",
   "type": "silverstripe-module",
-  "homepage": "http://github.com/Graphiques-Digitale/SilverstripeReconMetadata",
+  "homepage": "http://github.com/Graphiques-Digitale/SSSEO",
   "keywords": ["silverstripe", "SEO", "metadata"],
   "license": "GNU-GPL-v2",
   "authors": [
     {"name": "Atari","email": "atari@graphiques.co.za"}
   ],
   "support": {
-    "issues": "http://github.com/Graphiques-Digitale/SilverstripeReconMetadata/issues"
+    "issues": "http://github.com/Graphiques-Digitale/SSSEO/issues"
   },
   "require": {
     "silverstripe/cms": "~3.1",
