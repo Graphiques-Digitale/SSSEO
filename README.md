@@ -104,7 +104,7 @@ Google+ and Facebook Profile IDs for publishers and authors is included here, be
 
 Title inspiration: [http://moz.com/learn/seo/title-tag][3]
 
-Favicon inpiration: [audreyr/favicon-cheat-sheet][4] [Jonathan T. Neal - Understand the Favicon][5] [High Quality Visuals for Pinned Sites in Windows 8][6]
+Favicon inpiration: [audreyr/favicon-cheat-sheet][4], [Jonathan T. Neal - Understand the Favicon][5] and [High Quality Visuals for Pinned Sites in Windows 8][6]
 
 ### 4.2. Facebook Insights (a.k.a. Facebook Application)
 
