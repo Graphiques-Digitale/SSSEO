@@ -87,7 +87,9 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 	 */
 	public function OpenGraphMetadata() {
 
-		if ($this->owner->OpenGraphType != 'off') {
+		$self = $this->owner;
+
+		if ($self->OpenGraphType != 'off') {
 
 			// variables
 			$config = SiteConfig::current_site_config();
@@ -95,30 +97,30 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 			//// Type
 
-			$metadata .= $this->Markup('og:type', $this->owner->OpenGraphType, false);
+			$metadata .= $self->MarkupFacebook('og:type', $self->OpenGraphType, false);
 
 			//// Site Name
 
-			$metadata .= $this->Markup('og:site_name', $config->Title, true);
+			$metadata .= $self->MarkupFacebook('og:site_name', $config->Title, true);
 
 			//// URL
 
-			$metadata .= $this->Markup('og:url', $this->owner->AbsoluteLink(), false);
+			$metadata .= $self->MarkupFacebook('og:url', $self->AbsoluteLink(), false);
 
 			//// Title
 
-			$title = ($this->owner->OpenGraphTitle) ? $this->owner->OpenGraphTitle : $this->owner->Title;
-			$metadata .= $this->Markup('og:title', $title, true);
+			$title = ($self->OpenGraphTitle) ? $self->OpenGraphTitle : $self->Title;
+			$metadata .= $self->MarkupFacebook('og:title', $title, true);
 
 			//// Description
 
-			$description = ($this->owner->OpenGraphDescription) ? $this->owner->OpenGraphDescription : $this->owner->MetaDescription;
-			$metadata .= $this->Markup('og:description', $description, true);
+			$description = ($self->OpenGraphDescription) ? $self->OpenGraphDescription : $self->MetaDescription;
+			$metadata .= $self->MarkupFacebook('og:description', $description, true);
 
 			//// Image
 
 			if ($this->owner->OpenGraphImage()->exists()) {
-				$metadata .= $this->Markup('og:image', $this->owner->OpenGraphImage()->getAbsoluteURL(), false);
+				$metadata .= $self->MarkupFacebook('og:image', $self->OpenGraphImage()->getAbsoluteURL(), false);
 			}
 
 			//// fb:app_id
@@ -138,18 +140,6 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 		}
 
-	}
-
-
-	/* Helper Methods
-	------------------------------------------------------------------------------*/
-
-	/**
-	 * @name Markup
-	 */
-	public function Markup($property, $content, Boolean $encode) {
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
-		return '<meta property="' . $property . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
 

@@ -84,7 +84,9 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 	 */
 	public function TwitterCardsMetadata() {
 
-		if ($this->owner->TwitterCardsType != 'off') {
+		$self = $this->owner;
+
+		if ($self->TwitterCardsType != 'off') {
 
 			// variables
 			$config = SiteConfig::current_site_config();
@@ -92,30 +94,32 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 
 			//// Type
 
-			$metadata .= $this->Markup('twitter:card', $this->owner->TwitterCardsType, false);
+			$metadata .= $self->MarkupTwitter('twitter:card', $self->TwitterCardsType, false);
 
 			//// Site Name
 
-			$metadata .= $this->Markup('twitter:site', $config->Title, true);
+			$metadata .= $self->MarkupTwitter('twitter:site', $config->Title, true);
 
 			//// URL
 
-			$metadata .= $this->Markup('twitter:url', $this->owner->AbsoluteLink(), false);
+			$metadata .= $self->MarkupTwitter('twitter:url', $self->AbsoluteLink(), false);
 
 			//// Title
 
-			$title = ($this->owner->TwitterCardsTitle) ? $this->owner->TwitterCardsTitle : $this->owner->Title;
-			$metadata .= $this->Markup('twitter:title', $title, true);
+			// default to SiteTree::$Title
+			$title = ($self->TwitterCardsTitle) ? $self->TwitterCardsTitle : $self->Title;
+			$metadata .= $self->MarkupTwitter('twitter:title', $title, true);
 
 			//// Description
 
-			$description = ($this->owner->TwitterCardsDescription) ? $this->owner->TwitterCardsDescription : $this->owner->MetaDescription;
-			$metadata .= $this->Markup('twitter:description', $description, true);
+			// default to SiteTree::$Description
+			$description = ($self->TwitterCardsDescription) ? $self->TwitterCardsDescription : $self->MetaDescription;
+			$metadata .= $self->MarkupTwitter('twitter:description', $description, true);
 
 			//// Image
 
-			if ($this->owner->TwitterCardsImage()->exists()) {
-				$metadata .= $this->Markup('twitter:image', $this->owner->TwitterCardsImage()->getAbsoluteURL(), false);
+			if ($self->TwitterCardsImage()->exists()) {
+				$metadata .= $self->MarkupTwitter('twitter:image', $self->TwitterCardsImage()->getAbsoluteURL(), false);
 			}
 
 			// return
@@ -127,18 +131,6 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 
 		}
 
-	}
-
-
-	/* Helper Methods
-	------------------------------------------------------------------------------*/
-
-	/**
-	 * @name Markup
-	 */
-	public function Markup($name, $content, Boolean $encode) {
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
-		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
 

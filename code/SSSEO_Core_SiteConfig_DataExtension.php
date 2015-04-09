@@ -31,6 +31,8 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 		'TitleStatus' => 'Enum(array("off", "on"), "on")', // default: on
 		// Favicon
 		'FaviconStatus' => 'Enum(array("off", "on"), "on")', // default: on
+		// Authorship
+		'AuthorshipStatus' => 'Enum(array("off", "on"), "off")', // default: off
 		// ExtraMeta
 		'ExtraMetaStatus' => 'Enum(array("off", "on"), "off")', // default: off
 
@@ -45,6 +47,9 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 		'TitlePosition' => 'Enum(array("first", "last"), "first")',
 		// Favicon
 		'FaviconBG' => 'Varchar(6)',
+		// Authorship
+		'GoogleProfileID' => 'Varchar(128)',
+		'FacebookProfileID' => 'Varchar(128)',
 
 	);
 	private static $has_one = array(
@@ -118,6 +123,9 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 			DropdownField::create('FaviconStatus', 'Favicon', $owner->dbObject('FaviconStatus')->enumValues())
 				->setDescription('enable enhanced PNG favicon output for modern browsers ...and IE'),
 			// ExtraMeta
+			DropdownField::create('AuthorshipStatus', 'Authorship', $owner->dbObject('AuthorshipStatus')->enumValues())
+				->setDescription('enable authorship of pages'),
+			// ExtraMeta
 			DropdownField::create('ExtraMetaStatus', 'Custom Metadata', $owner->dbObject('ExtraMetaStatus')->enumValues())
 				->setDescription('allow custom metadata on pages<br />please ensure metadata content is entity encoded!') // @todo entity encode content="%s"
 		));
@@ -188,6 +196,22 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 					->setMaxLength(6)
 					->setDescription('format: hexadecimal triplet<br />character limit: 6')
 			));
+
+		}
+
+		//// Authorship
+
+		if ($this->AuthorshipEnabled()) {
+
+			$tab = 'Root.SSSEO.Authorship';
+
+			// add fields
+			$fields->addFieldsToTab($tab, array(
+				TextField::create('GoogleProfileID', 'Google+ Profile ID'),
+				TextField::create('FacebookProfileID', 'Facebook Profile ID')
+			));
+
+
 
 		}
 
