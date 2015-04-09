@@ -104,7 +104,7 @@ class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
 
 			// variables
 			$config = SiteConfig::current_site_config();
-			$metadata = '<!-- Schema.org -->' . PHP_EOL;
+			$metadata = $self->MarkupHeader('Schema.org');
 
 			//// Title
 

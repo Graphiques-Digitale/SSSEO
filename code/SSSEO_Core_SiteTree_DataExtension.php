@@ -114,7 +114,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		$metadata = PHP_EOL . '<!-- SSSEO -->' . PHP_EOL;
 
 		//// Basic
-		$metadata .= '<!-- HTML -->' . PHP_EOL;
+		$metadata .= $self->MarkupHeader('HTML');
 
 		// Charset
 		if ($config->CharsetEnabled()) {
@@ -139,10 +139,6 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 			$ico = Director::fileExists('favicon.ico');
 
-			if ($ico) {
-
-			}
-
 			// PNG + ICO
 			if ($config->FaviconPNG()->exists()) {
 
@@ -151,7 +147,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				$pngBG = ($config->FaviconBG) ? $config->FaviconBG : $config->faviconBGDefault();
 
 				//
-				$metadata .= '<!-- Favicon -->' . PHP_EOL;
+				$metadata .= $self->MarkupHeader('Favicon');
 
 				// 1. favicon.png
 				$metadata .= '<link rel="icon" href="' . $pngURL . '" />' . PHP_EOL;
@@ -171,18 +167,68 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			// ICO only
 			else {
 				if ($ico) {
-					$metadata = '<!-- Favicon -->' . PHP_EOL;
+				$metadata .= $self->MarkupHeader('Favicon');
 					$metadata .= '<link rel="shortcut icon" href="/favicon.ico" />' . PHP_EOL;
 				}
 			}
 
 		}
 
-		//// Authorship
+		//// Touch Icon
+
+		if ($config->hasExtension('SSSEO_TouchIcon_SiteConfig_DataExtension')) {
+			$metadata .= $config->TouchIconMetadata();
+		}
+
+		//// Facebook Insights
+
+		if ($config->hasExtension('SSSEO_FacebookInsights_SiteConfig_DataExtension')) {
+			$metadata .= $config->FacebookInsightsMetadata();
+		}
+
+		//// Open Graph
+
+		if ($self->hasExtension('SSSEO_OpenGraph_SiteTree_DataExtension')) {
+			$metadata .= $self->OpenGraphMetadata();
+		}
+
+		// Facebook Authorship
 		if ($config->AuthorshipEnabled()) {
 
 			$authors = $self->Authors();
-			$metadata .= '<!-- Authorship -->' . PHP_EOL;
+			$metadata .= $self->MarkupHeader('Facebook Authorship');
+
+			// Facebook Authors
+			foreach ($authors as $author) {
+				if ($author->FacebookProfileID) {
+					$metadata .= '<meta property="article:author" content="' . $author->FacebookProfileID . '" />' . PHP_EOL;
+				}
+			}
+
+			// Facebook Publisher
+			if ($config->FacebookProfileID) {
+				$metadata .= '<meta property="article:publisher" content="' . $config->FacebookProfileID . '" />' . PHP_EOL;
+			}
+
+		}
+
+		//// Twitter Cards
+
+		if ($self->hasExtension('SSSEO_TwitterCards_SiteTree_DataExtension')) {
+			$metadata .= $self->TwitterCardsMetadata();
+		}
+
+		//// Schema.org
+
+		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
+			$metadata .= $self->SchemaDotOrgMetadata();
+		}
+
+		// Google+ Authorship
+		if ($config->AuthorshipEnabled()) {
+
+			$authors = $self->Authors();
+			$metadata .= $self->MarkupHeader('Google+ Authorship');
 
 			// Google+ Authors
 			foreach ($authors as $author) {
@@ -199,42 +245,6 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				$metadata .= '<link rel="publisher" href="https://plus.google.com/' . $config->GoogleProfileID . '/" />' . PHP_EOL;
 			}
 
-			// Facebook Authors
-			foreach ($authors as $author) {
-				if ($author->FacebookProfileID) {
-					$metadata .= '<meta property="article:author" content="' . $author->FacebookProfileID . '" />' . PHP_EOL;
-				}
-			}
-
-			// Facebook Publisher
-			if ($config->FacebookProfileID) {
-				$metadata .= '<meta property="article:publisher" content="' . $config->FacebookProfileID . '" />' . PHP_EOL;
-			}
-
-		}
-
-		//// Facebook Insights
-
-		if ($config->hasExtension('SSSEO_FacebookInsights_SiteConfig_DataExtension')) {
-			$metadata .= $config->FacebookInsightsMetadata();
-		}
-
-		//// Open Graph
-
-		if ($self->hasExtension('SSSEO_OpenGraph_SiteTree_DataExtension')) {
-			$metadata .= $self->OpenGraphMetadata();
-		}
-
-		//// Twitter Cards
-
-		if ($self->hasExtension('SSSEO_TwitterCards_SiteTree_DataExtension')) {
-			$metadata .= $self->TwitterCardsMetadata();
-		}
-
-		//// Schema.org
-
-		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
-			$metadata .= $self->SchemaDotOrgMetadata();
 		}
 
 		//// ExtraMeta
@@ -266,6 +276,14 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		if ($encode) $content = htmlentities($content, ENT_QUOTES);
 		// return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+	}
+
+	/**
+	 * @name Markup Header
+	 */
+	public function MarkupHeader($title) {
+		// return
+		return '<!-- ' . $title . ' -->' . PHP_EOL;
 	}
 
 	/**

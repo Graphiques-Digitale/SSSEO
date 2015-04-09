@@ -88,7 +88,7 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 			// variables
 			$config = SiteConfig::current_site_config();
-			$metadata = '<!-- Open Graph -->' . PHP_EOL;
+			$metadata = $self->MarkupHeader('Open Graph');
 
 			//// Type
 

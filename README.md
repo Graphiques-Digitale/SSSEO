@@ -53,11 +53,16 @@ Will output something along the lines of:
 <!--[if IE]><link rel="shortcut icon" href="/favicon.ico" /><![endif]-->
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="msapplication-TileImage" content="http://ssseo.silverstripe.org/assets/SSSEO/logo.png" />
-<!-- Authorship -->
-<link rel="author" href="https://plus.google.com/$GoogleAuthorID/" />
-<link rel="publisher" href="https://plus.google.com/$GooglePublisherID/" />
-<meta property="article:author" content="$FacebookAuthorID" />
-<meta property="article:publisher" content="$GooglePublisherID" />
+<!-- Touch Icon -->
+<link rel="icon" sizes="192x192" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize192192-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize180180-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize144144-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize120120-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize114114-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize7676-logo.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize7272-logo.png">
+<link rel="apple-touch-icon-precomposed" href="http://ssseo.silverstripe.org/assets/SSSEO/TouchIcon/_resampled/SetSize5757-logo.png"><!-- 57×57px -->
 <!-- Facebook Insights -->
 <meta property="fb:app_id" content="0123456789" />
 <meta property="fb:admins" content="$FacebookAuthorID" />
@@ -68,6 +73,9 @@ Will output something along the lines of:
 <meta property="og:title" content="Hello :)" />
 <meta property="og:description" content="This can be overridden, or it will default to &#039;&lt;meta name=&quot;description&quot;&#039;... /&gt;" />
 <meta property="og:image" content="http://ssseo.silverstripe.org/assets/SSSEO/OpenGraph/test.jpg" />
+<!-- Facebook Authorship -->
+<meta property="article:author" content="$FacebookAuthorID" />
+<meta property="article:publisher" content="$GooglePublisherID" />
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="SSSEO" />
@@ -79,6 +87,9 @@ Will output something along the lines of:
 <meta itemprop="name" content="Home" />
 <meta itemprop="description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <meta itemprop="image" content="http://ssseo.silverstripe.org/assets/SSSEO/SchemaDotOrg/test.jpg" />
+<!-- Google+ Authorship -->
+<link rel="author" href="https://plus.google.com/$GoogleAuthorID/" />
+<link rel="publisher" href="https://plus.google.com/$GooglePublisherID/" />
 <!-- Extra Metadata -->
 <meta name="keywords" content="HTML,CSS,XML,JavaScript"><meta name="random" content="1, 2, 3...">
 <!-- end SSSEO -->
@@ -114,7 +125,17 @@ Title inspired by: [http://moz.com/learn/seo/title-tag][3]
 
 Favicon inspired by: [audreyr/favicon-cheat-sheet][4], [Jonathan T. Neal - Understand the Favicon][5] and [High Quality Visuals for Pinned Sites in Windows 8][6]
 
-### 4.2. Facebook Insights (a.k.a. Facebook Application)
+### 4.2. Touch Icons for Apple and Android
+
+To enable Touch Icon functionality, include:
+
+> SSSEO_TouchIcon_SiteConfig_DataExtension
+
+This will add every conceivable (yet relevant) touch icon.
+
+Touch icons inspired by: [Everything you always wanted to know about touch icons][11]
+
+### 4.3. Facebook Insights (a.k.a. Facebook Application)
 
 To enable Facebook Insights functionality, include:
 
@@ -126,7 +147,7 @@ This will allow the addition of a Facebook `fb:app_id` and `fb:admins` in SiteCo
 
 [Facebook - Domain Insights][7]
 
-### 4.3. Open Graph
+### 4.4. Open Graph
 
 To enable Open Graph functionality, include:
 
@@ -136,7 +157,7 @@ Only supports type **_article_** for the moment.
 
 [The Open Graph protocol][8]
 
-### 4.4. Twitter Cards
+### 4.5. Twitter Cards
 
 To enable Twitter Cards functionality, include:
 
@@ -146,7 +167,7 @@ Only supports type **_summary_** for the moment.
 
 [Twitter Cards - Overview][9]
 
-### 4.5. Schema.org
+### 4.6. Schema.org
 
 To enable Schema.org functionality, include:
 
@@ -167,12 +188,6 @@ This will output the correct **_itemscope_** or **_type_** into the head tag.
 _@note: improve itemscope embedding process, but without using JS, how..?_
 
 [Google+ Web Snippet][10]
-
-### 4.6. Touch Icons for Apple and Android
-
-_@note: to be implemented in future versions._
-
-Touch icons inspired by: [Everything you always wanted to know about touch icons][11]
 
 ---
 

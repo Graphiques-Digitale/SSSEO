@@ -85,7 +85,7 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 
 			// variables
 			$config = SiteConfig::current_site_config();
-			$metadata = '<!-- Twitter Cards -->' . PHP_EOL;
+			$metadata = $self->MarkupHeader('Twitter Cards');
 
 			//// Type
 
