@@ -199,11 +199,11 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 
 		}
 
-		//// Authorship
+		//// Publisher
 
 		if ($this->AuthorshipEnabled()) {
 
-			$tab = 'Root.SSSEO.Authorship';
+			$tab = 'Root.SSSEO.Publisher';
 
 			// add fields
 			$fields->addFieldsToTab($tab, array(

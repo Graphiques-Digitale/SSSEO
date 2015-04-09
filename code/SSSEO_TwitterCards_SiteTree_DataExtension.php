@@ -21,13 +21,12 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	private static $db = array(
-		// HTML
-		'TwitterCardsType' => 'Enum(array("off", "summary"), "off")',
+		'TwitterCardsType' => 'Enum(array("off", "summary"), "summary")',
 		'TwitterCardsTitle' => 'Text',
 		'TwitterCardsDescription' => 'Text',
 	);
 	private static $has_one = array(
-		'TwitterCardsImage' => 'Image'
+		'TwitterCardsImage' => 'Image',
 	);
 
 
@@ -37,30 +36,26 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 	// CMS Fields
 	public function updateCMSFields(FieldList $fields) {
 
-		// SiteConfig
+		// vars
 		$config = SiteConfig::current_site_config();
-
-		// SSSEO Tabset
-// 		$fields->addFieldToTab('Root', new TabSet('SSSEO'));
-
-		// Open Graph tab
+		$self = $this->owner;
 		$tab = 'Root.SSSEO.TwitterCards';
 
 		//// Type
 		$fields->addFieldsToTab($tab, array(
-			DropdownField::create('TwitterCardsType', 'twitter:card', $this->owner->dbObject('TwitterCardsType')->enumValues()),
+			DropdownField::create('TwitterCardsType', 'twitter:card', $self->dbObject('TwitterCardsType')->enumValues()),
 		));
 
 		// if NOT off
-		if ($this->owner->TwitterCardsType != 'off') {
+		if ($self->TwitterCardsType != 'off') {
 			//
 			$fields->addFieldsToTab($tab, array(
 				ReadonlyField::create('ReadonlyTwitterCardsSite', 'twitter:site', $config->Title),
 				TextField::create('TwitterCardsTitle', 'twitter:title')
-					->setAttribute('placeholder', $this->owner->Title),
-				ReadonlyField::create('ReadonlyTwitterCardsURL', 'twitter:url', $this->owner->AbsoluteLink()),
+					->setAttribute('placeholder', $self->Title),
+				ReadonlyField::create('ReadonlyTwitterCardsURL', 'twitter:url', $self->AbsoluteLink()),
 				TextareaField::create('TwitterCardsDescription', 'twitter:description')
-					->setAttribute('placeholder', $this->owner->MetaDescription),
+					->setAttribute('placeholder', $self->MetaDescription),
 				UploadField::create('TwitterCardsImage', 'twitter:image')
 					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
 					->setFolderName('SSSEO/TwitterCards/')

@@ -179,35 +179,38 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		}
 
 		//// Authorship
+		if ($config->AuthorshipEnabled()) {
 
-		$authors = $self->Authors();
-		$metadata .= '<!-- Authorship -->' . PHP_EOL;
+			$authors = $self->Authors();
+			$metadata .= '<!-- Authorship -->' . PHP_EOL;
 
-		// Google+ Authors
-		foreach ($authors as $author) {
-			if ($author->GoogleProfileID) {
-				$metadata .= '<link rel="author" href="https://plus.google.com/' . $author->GoogleProfileID . '/" />' . PHP_EOL;
-				// @todo kinda - Google+ does not support multiple authors - break loop
-				break;
+			// Google+ Authors
+			foreach ($authors as $author) {
+				if ($author->GoogleProfileID) {
+					$metadata .= '<link rel="author" href="https://plus.google.com/' . $author->GoogleProfileID . '/" />' . PHP_EOL;
+					// @todo kinda - Google+ does not support multiple authors - break loop
+					break;
+				}
+
 			}
 
-		}
-
-		// Google+ Publisher
-		if ($config->GoogleProfileID) {
-			$metadata .= '<link rel="publisher" href="https://plus.google.com/' . $config->GoogleProfileID . '/" />' . PHP_EOL;
-		}
-
-		// Facebook Authors
-		foreach ($authors as $author) {
-			if ($author->FacebookProfileID) {
-				$metadata .= '<meta property="article:author" content="' . $author->FacebookProfileID . '" />' . PHP_EOL;
+			// Google+ Publisher
+			if ($config->GoogleProfileID) {
+				$metadata .= '<link rel="publisher" href="https://plus.google.com/' . $config->GoogleProfileID . '/" />' . PHP_EOL;
 			}
-		}
 
-		// Facebook Publisher
-		if ($config->FacebookProfileID) {
-			$metadata .= '<meta property="article:publisher" content="' . $config->FacebookProfileID . '" />' . PHP_EOL;
+			// Facebook Authors
+			foreach ($authors as $author) {
+				if ($author->FacebookProfileID) {
+					$metadata .= '<meta property="article:author" content="' . $author->FacebookProfileID . '" />' . PHP_EOL;
+				}
+			}
+
+			// Facebook Publisher
+			if ($config->FacebookProfileID) {
+				$metadata .= '<meta property="article:publisher" content="' . $config->FacebookProfileID . '" />' . PHP_EOL;
+			}
+
 		}
 
 		//// Facebook Insights
@@ -226,6 +229,12 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		if ($self->hasExtension('SSSEO_TwitterCards_SiteTree_DataExtension')) {
 			$metadata .= $self->TwitterCardsMetadata();
+		}
+
+		//// Schema.org
+
+		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
+			$metadata .= $self->SchemaDotOrgMetadata();
 		}
 
 		//// ExtraMeta
@@ -250,7 +259,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
-	 * @name Markup
+	 * @name Markup (basic)
 	 */
 	public function Markup($name, $content, $encode = true) {
 		// encode content
@@ -260,7 +269,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name MarkupRel
+	 * @name Markup Rel
 	 */
 	public function MarkupRel($name, $content, $encode = true) {
 		// encode content
@@ -270,7 +279,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name FacebookMarkup
+	 * @name Markup Facebook
 	 */
 	public function MarkupFacebook($property, $content, $encode = true) {
 		// encode content
@@ -280,13 +289,23 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name TwitterMarkup
+	 * @name Markup Twitter
 	 */
 	public function MarkupTwitter($name, $content, $encode = true) {
 		// encode content
 		if ($encode) $content = htmlentities($content, ENT_QUOTES);
 		// return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+	}
+
+	/**
+	 * @name Markup Schema
+	 */
+	public function MarkupSchema($itemprop, $content, $encode = true) {
+		// encode content
+		if ($encode) $content = htmlentities($content, ENT_QUOTES);
+		// return
+		return '<meta itemprop="' . $itemprop . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
 

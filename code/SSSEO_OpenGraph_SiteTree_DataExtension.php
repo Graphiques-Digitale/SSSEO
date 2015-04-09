@@ -18,13 +18,12 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 	//// Model Variables
 	private static $db = array(
-		// HTML
-		'OpenGraphType' => 'Enum(array("off", "article"), "off")',
+		'OpenGraphType' => 'Enum(array("off", "article"), "article")',
 		'OpenGraphTitle' => 'Text',
 		'OpenGraphDescription' => 'Text',
 	);
 	private static $has_one = array(
-		'OpenGraphImage' => 'Image'
+		'OpenGraphImage' => 'Image',
 	);
 
 
@@ -34,37 +33,33 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 	// CMS Fields
 	public function updateCMSFields(FieldList $fields) {
 
-		//
+		// vars
 		$config = SiteConfig::current_site_config();
-
-		// SSSEO Tabset
-// 		$fields->addFieldToTab('Root', new TabSet('SSSEO'));
-
-		// Open Graph tab
+		$self = $this->owner;
 		$tab = 'Root.SSSEO.OpenGraph';
 
 		//// Type
 		$fields->addFieldsToTab($tab, array(
-			DropdownField::create('OpenGraphType', 'og:type', $this->owner->dbObject('OpenGraphType')->enumValues()),
+			DropdownField::create('OpenGraphType', 'og:type', $self->dbObject('OpenGraphType')->enumValues()),
 		));
 
 		// if NOT off
-		if ($this->owner->OpenGraphType != 'off') {
+		if ($self->OpenGraphType != 'off') {
 			//
 			$fields->addFieldsToTab($tab, array(
 				ReadonlyField::create('ReadonlyOpenGraphSiteName', 'og:site_name', $config->Title),
 				TextField::create('OpenGraphTitle', 'og:title')
-					->setAttribute('placeholder', $this->owner->Title),
-				ReadonlyField::create('ReadonlyOpenGraphURL', 'og:url', $this->owner->AbsoluteLink()),
+					->setAttribute('placeholder', $self->Title),
+				ReadonlyField::create('ReadonlyOpenGraphURL', 'og:url', $self->AbsoluteLink()),
 				TextareaField::create('OpenGraphDescription', 'og:description')
-					->setAttribute('placeholder', $this->owner->MetaDescription),
+					->setAttribute('placeholder', $self->MetaDescription),
 				UploadField::create('OpenGraphImage', 'og:image')
 					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
 					->setFolderName('SSSEO/OpenGraph/')
 					->setDescription('file format: JPG, PNG, GIF<br />pixel dimensions: 1200 x 630')
 			));
 			//
-// 			if ($this->owner->hasExtension('SSSEO_Authorship_SiteTree_DataExtension')
+// 			if ($self->hasExtension('SSSEO_Authorship_SiteTree_DataExtension')
 // 					&& $config->hasExtension('SSSEO_Authorship_SiteConfig_DataExtension')
 // 					&& Member::has_extension('SSSEO_Authorship_Member_DataExtension'))
 // 			{
@@ -119,7 +114,7 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 			//// Image
 
-			if ($this->owner->OpenGraphImage()->exists()) {
+			if ($self->OpenGraphImage()->exists()) {
 				$metadata .= $self->MarkupFacebook('og:image', $self->OpenGraphImage()->getAbsoluteURL(), false);
 			}
 

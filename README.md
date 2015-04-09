@@ -96,15 +96,17 @@ All core submodules should be included, these are:
 
 > SSSEO_Core_SiteTree_DataExtension
 
-This will enable the bulk of the default functionality pertaining to HTML metadata: **_meta charset_**, **_meta title_**, **_meta description_**, **_rel="canonical"_**, **_rel="author"_**, **_rel="publisher_**, **_favicon ICO + PNG_** and **_custom metadata_**.
+This will enable the bulk of the default functionality pertaining to HTML metadata: **_meta charset_**, **_meta title_**, **_meta description_**, **_rel="canonical"_**, **_rel="author"_**, **_rel="publisher"_**, **_favicon ICO + PNG_** and **_custom metadata_**.
 
 These can be toggled on or off via SiteConfig @ `~/admin/settings/ > SSSEO`
 
-Google+ and Facebook Profile IDs for publishers and authors is included here, because it made the most sense, it's only 2 additional fields and they are needed in multiple submodules. @note: I'm already rethinking this approach again, and I have already changed it twice :(
+Google+ and Facebook Profile IDs for publishers and authors is included here, because it made the most sense, it's only 2 additional fields and they are needed in multiple submodules.
 
-Title inspiration: [http://moz.com/learn/seo/title-tag][3]
+_@note: I'm already rethinking this approach again, and I have already changed it twice :(_
 
-Favicon inpiration: [audreyr/favicon-cheat-sheet][4], [Jonathan T. Neal - Understand the Favicon][5] and [High Quality Visuals for Pinned Sites in Windows 8][6]
+Title inspired by: [http://moz.com/learn/seo/title-tag][3]
+
+Favicon inspired by: [audreyr/favicon-cheat-sheet][4], [Jonathan T. Neal - Understand the Favicon][5] and [High Quality Visuals for Pinned Sites in Windows 8][6]
 
 ### 4.2. Facebook Insights (a.k.a. Facebook Application)
 
@@ -140,13 +142,33 @@ Only supports type **_summary_** for the moment.
 
 ### 4.5. Schema.org
 
+To enable Schema.org functionality, include:
+
+> SSSEO_SchemaDotOrg_SiteTree_DataExtension
+
+Please also include a call to`$SchemaDotOrgItemscope()` inside the `<head>` tag of any-and-all relevant`$ThemeDir()/templates/*Page.ss` templates, like so:
+
+```html
+<head $SchemaDotOrgItemscope()>
+$BaseHref()
+$Metadata()
+<!-- ++ any further includes -->
+</head>
+```
+
+This will output the correct **_itemscope_** or _type_ into the head tag.
+
+_@note: improve itemscope embedding process, but without using JS, how..?_
+
+[Google+ Web Snippet][10]
+
+### 4.6. Touch Icons for Apple and Android
+
 _@note: to be implemented in future versions._
 
-### 4.6. Apple Touch Icons + Android rel="icon"
+Touch icons inspired by: [Everything you always wanted to know about touch icons][11]
 
-_@note: to be implemented in future versions._
-
-[Everything you always wanted to know about touch icons][10]
+---
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
 [2]: http://www.silverstripe.org/blog/5-tips-for-seo-with-silverstripe-3-/
@@ -157,4 +179,5 @@ _@note: to be implemented in future versions._
 [7]: https://developers.facebook.com/docs/platforminsights/domains
 [8]: http://ogp.me
 [9]: https://dev.twitter.com/cards/overview
-[10]: https://mathiasbynens.be/notes/touch-icons
+[10]: https://developers.google.com/+/web/snippet/
+[11]: https://mathiasbynens.be/notes/touch-icons
