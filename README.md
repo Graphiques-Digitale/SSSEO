@@ -3,7 +3,7 @@ SSSEO v1
 
 This is a module for use with the SilverStripe v3.1.* framework & CMS
 
-It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages, based largely on [18 Meta Tags Every Webpage Should Have in 2013][1], including some additional enhancements with _Favicons_ and _Touch Icons_.
+It is meant to provide a comprehensive-as-you-need, and yet not-too-intimidating interface for adding extended metadata to pages, based largely on [18 Meta Tags Every Webpage Should Have in 2013][1], including some additional enhancements with **_Favicons_** and **_Touch Icons_**.
 
 Also, a good overview: [5 tips for SEO with Silverstripe 3][2]
 
