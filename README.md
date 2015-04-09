@@ -79,7 +79,7 @@ Will output something along the lines of:
 <meta itemprop="name" content="Home" />
 <meta itemprop="description" content="A &quot;description&quot; with &#039;both&#039; quotes in &amp; some | other &lt;nonsense&gt;" />
 <meta itemprop="image" content="http://ssseo.silverstripe.org/assets/SSSEO/SchemaDotOrg/test.jpg" />
-<!-- Extra Metadata --->
+<!-- Extra Metadata -->
 <meta name="keywords" content="HTML,CSS,XML,JavaScript"><meta name="random" content="1, 2, 3...">
 <!-- end SSSEO -->
 <!-- ++ any further includes -->
