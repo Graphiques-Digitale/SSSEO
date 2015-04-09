@@ -109,12 +109,12 @@ class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
 			//// Title
 
 			$title = ($self->SchemaDotOrgTitle) ? $self->SchemaDotOrgTitle : $self->Title;
-			$metadata .= $self->MarkupSchema('name', $title, true);
+			$metadata .= $self->MarkupSchema('name', $title, true, $config->Charset);
 
 			//// Description
 
 			$description = ($self->SchemaDotOrgDescription) ? $self->SchemaDotOrgDescription : $self->MetaDescription;
-			$metadata .= $self->MarkupSchema('description', $description, true);
+			$metadata .= $self->MarkupSchema('description', $description, true, $config->Charset);
 
 			//// Image
 

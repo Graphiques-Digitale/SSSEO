@@ -16,6 +16,7 @@
 
 class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
+
 	/* Overload Variable
 	 ------------------------------------------------------------------------------*/
 
@@ -49,6 +50,13 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		$tab = 'Root.SSSEO.FullOutput';
 
+		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
+			if ($itemscope = $self->SchemaDotOrgItemscope()) {
+				$fields->addFieldsToTab($tab, array(
+					LiteralField::create('LiteralItemscope', '<pre style="font-weight: bold;">' . nl2br(htmlentities('<head' . $itemscope . '>')) . '</pre>')
+				));
+			}
+		}
 		$fields->addFieldsToTab($tab, array(
 			LiteralField::create('LiteralFullOutput', '<pre>' . nl2br(htmlentities($self->Metadata(), ENT_QUOTES)) . '</pre>')
 		));
@@ -111,7 +119,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		// variables
 		$config = SiteConfig::current_site_config();
 		$self = $this->owner;
-		$metadata = PHP_EOL . '<!-- SSSEO -->' . PHP_EOL;
+		$metadata = PHP_EOL . $self->MarkupHeader('SSSEO');
 
 		//// Basic
 		$metadata .= $self->MarkupHeader('HTML');
@@ -123,16 +131,16 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		// Canonical
 		if ($config->CanonicalEnabled()) {
-			$metadata .= '<link rel="canonical" href="' . $self->MetaCanonical() . '" />' . PHP_EOL;
+			$metadata .= $self->MarkupRel('canonical', $self->MetaCanonical());
 		}
 
 		// Title
 		if ($config->TitleEnabled()) {
-			$metadata .= '<title>' . htmlentities($self->MetaTitle(), ENT_QUOTES) . '</title>' . PHP_EOL;
+			$metadata .= '<title>' . htmlentities($self->MetaTitle(), ENT_QUOTES, $config->Charset) . '</title>' . PHP_EOL;
 		}
 
 		// Description
-		$metadata .= $self->Markup('description', htmlentities($self->MetaDescription(), ENT_QUOTES));
+		$metadata .= $self->Markup('description', $self->MetaDescription(), true, $config->Charset);
 
 		// Favicon
 		if ($config->FaviconEnabled()) {
@@ -150,7 +158,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				$metadata .= $self->MarkupHeader('Favicon');
 
 				// 1. favicon.png
-				$metadata .= '<link rel="icon" href="' . $pngURL . '" />' . PHP_EOL;
+				$metadata .= $self->MarkupRel('icon', $pngURL);
 
 				// 2. favicon.ico
 				if ($ico) {
@@ -159,8 +167,8 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				}
 
 				// IE 10
-				$metadata .= '<meta name="msapplication-TileColor" content="#' . $pngBG . '" />' . PHP_EOL;
-				$metadata .= '<meta name="msapplication-TileImage" content="' . $pngURL . '" />' . PHP_EOL;
+				$metadata .= $self->Markup('msapplication-TileColor', $pngBG, false);
+				$metadata .= $self->Markup('msapplication-TileImage', $pngURL, false);
 
 			}
 
@@ -168,7 +176,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			else {
 				if ($ico) {
 				$metadata .= $self->MarkupHeader('Favicon');
-					$metadata .= '<link rel="shortcut icon" href="/favicon.ico" />' . PHP_EOL;
+					$metadata .= $self->MarkupRel('shortcut icon', '/favicon.ico');
 				}
 			}
 
@@ -177,13 +185,13 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		//// Touch Icon
 
 		if ($config->hasExtension('SSSEO_TouchIcon_SiteConfig_DataExtension')) {
-			$metadata .= $config->TouchIconMetadata();
+			$metadata .= $config->TouchIconMetadata($self);
 		}
 
 		//// Facebook Insights
 
 		if ($config->hasExtension('SSSEO_FacebookInsights_SiteConfig_DataExtension')) {
-			$metadata .= $config->FacebookInsightsMetadata();
+			$metadata .= $config->FacebookInsightsMetadata($self);
 		}
 
 		//// Open Graph
@@ -201,13 +209,13 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			// Facebook Authors
 			foreach ($authors as $author) {
 				if ($author->FacebookProfileID) {
-					$metadata .= '<meta property="article:author" content="' . $author->FacebookProfileID . '" />' . PHP_EOL;
+					$metadata .= $self->MarkupFacebook('article:author', $author->FacebookProfileID, false);
 				}
 			}
 
 			// Facebook Publisher
 			if ($config->FacebookProfileID) {
-				$metadata .= '<meta property="article:publisher" content="' . $config->FacebookProfileID . '" />' . PHP_EOL;
+				$metadata .= $self->MarkupFacebook('article:publisher', $config->FacebookProfileID, false);
 			}
 
 		}
@@ -233,7 +241,8 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			// Google+ Authors
 			foreach ($authors as $author) {
 				if ($author->GoogleProfileID) {
-					$metadata .= '<link rel="author" href="https://plus.google.com/' . $author->GoogleProfileID . '/" />' . PHP_EOL;
+					$profile = 'https://plus.google.com/' . $author->GoogleProfileID . '/';
+					$metadata .= $self->MarkupRel('author', $profile);
 					// @todo kinda - Google+ does not support multiple authors - break loop
 					break;
 				}
@@ -242,7 +251,8 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 			// Google+ Publisher
 			if ($config->GoogleProfileID) {
-				$metadata .= '<link rel="publisher" href="https://plus.google.com/' . $config->GoogleProfileID . '/" />' . PHP_EOL;
+				$profile = 'https://plus.google.com/' . $config->GoogleProfileID . '/';
+				$metadata .= $self->MarkupRel('publisher', $profile);
 			}
 
 		}
@@ -251,13 +261,13 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		if ($config->ExtraMetaEnabled()) {
 			if ($extraMeta = $this->MetaExtraMeta()) {
-				$metadata .= '<!-- Extra Metadata -->' . PHP_EOL;
+				$metadata .= $self->MarkupHeader('Extra Metadata');
 				$metadata .= $this->MetaExtraMeta() . PHP_EOL;
 			}
 		}
 
 		// end
-		$metadata .= '<!-- end SSSEO -->' . PHP_EOL;
+		$metadata .= $self->MarkupHeader('end SSSEO');
 
 		// return
 		return $metadata;
@@ -271,9 +281,9 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	/**
 	 * @name Markup (basic)
 	 */
-	public function Markup($name, $content, $encode = true) {
+	public function Markup($name, $content, $encode, $charset = 'UTF-8') {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
 		// return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
 	}
@@ -289,19 +299,20 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	/**
 	 * @name Markup Rel
 	 */
-	public function MarkupRel($name, $content, $encode = true) {
-		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
-		// return
-		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+	public function MarkupRel($rel, $href, $type = null) {
+		if ($type) {
+			return '<link rel="' . $rel . '" href="' . $href . '" type="' . $type . '" />' . PHP_EOL;
+		} else {
+			return '<link rel="' . $rel . '" href="' . $href . '" />' . PHP_EOL;
+		}
 	}
 
 	/**
 	 * @name Markup Facebook
 	 */
-	public function MarkupFacebook($property, $content, $encode = true) {
+	public function MarkupFacebook($property, $content, $encode, $charset = 'UTF-8') {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
 		//
 		return '<meta property="' . $property . '" content="' . $content . '" />' . PHP_EOL;
 	}
@@ -309,9 +320,9 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	/**
 	 * @name Markup Twitter
 	 */
-	public function MarkupTwitter($name, $content, $encode = true) {
+	public function MarkupTwitter($name, $content, $encode, $charset = 'UTF-8') {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
 		// return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
 	}
@@ -319,9 +330,9 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	/**
 	 * @name Markup Schema
 	 */
-	public function MarkupSchema($itemprop, $content, $encode = true) {
+	public function MarkupSchema($itemprop, $content, $encode, $charset = 'UTF-8') {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES);
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
 		// return
 		return '<meta itemprop="' . $itemprop . '" content="' . $content . '" />' . PHP_EOL;
 	}

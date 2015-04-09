@@ -52,7 +52,7 @@ class SSSEO_FacebookInsights_SiteConfig_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	//
-	public function FacebookInsightsMetadata() {
+	public function FacebookInsightsMetadata($page) {
 
 		// variables
 		$config = $this->owner;
@@ -61,13 +61,13 @@ class SSSEO_FacebookInsights_SiteConfig_DataExtension extends DataExtension {
 		// Facebook App ID
 		if ($config->FacebookAppID) {
 
-			$metadata = '<!-- Facebook Insights -->' . PHP_EOL;
-			$metadata .= '<meta property="fb:app_id" content="' . $config->FacebookAppID . '" />' . PHP_EOL;
+			$metadata = $page->MarkupHeader('Facebook Insights');
+			$metadata .= $page->MarkupFacebook('fb:app_id', $config->FacebookAppID, false);
 
 			// Admins (if App ID)
 			foreach ($config->FacebookAdmins() as $admin) {
 				if ($admin->FacebookProfileID) {
-					$metadata .= '<meta property="fb:admins" content="' . $admin->FacebookProfileID . '" />' . PHP_EOL;
+					$metadata .= $page->MarkupFacebook('fb:admins', $admin->FacebookProfileID, false);
 				}
 			}
 

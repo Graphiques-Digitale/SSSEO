@@ -93,7 +93,7 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 
 			//// Site Name
 
-			$metadata .= $self->MarkupTwitter('twitter:site', $config->Title, true);
+			$metadata .= $self->MarkupTwitter('twitter:site', $config->Title, true, $config->Charset);
 
 			//// URL
 
@@ -103,13 +103,13 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 
 			// default to SiteTree::$Title
 			$title = ($self->TwitterCardsTitle) ? $self->TwitterCardsTitle : $self->Title;
-			$metadata .= $self->MarkupTwitter('twitter:title', $title, true);
+			$metadata .= $self->MarkupTwitter('twitter:title', $title, true, $config->Charset);
 
 			//// Description
 
 			// default to SiteTree::$Description
 			$description = ($self->TwitterCardsDescription) ? $self->TwitterCardsDescription : $self->MetaDescription;
-			$metadata .= $self->MarkupTwitter('twitter:description', $description, true);
+			$metadata .= $self->MarkupTwitter('twitter:description', $description, true, $config->Charset);
 
 			//// Image
 
