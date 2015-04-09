@@ -146,7 +146,7 @@ _@note: to be implemented in future versions._
 
 _@note: to be implemented in future versions._
 
-[Everything you always wanted to know about touch icons][10]	
+[Everything you always wanted to know about touch icons][10]
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
 [2]: http://www.silverstripe.org/blog/5-tips-for-seo-with-silverstripe-3-/
@@ -157,4 +157,4 @@ _@note: to be implemented in future versions._
 [7]: https://developers.facebook.com/docs/platforminsights/domains
 [8]: http://ogp.me
 [9]: https://dev.twitter.com/cards/overview
-[10]: Everything you always wanted to know about touch icons
+[10]: https://mathiasbynens.be/notes/touch-icons
