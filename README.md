@@ -197,6 +197,8 @@ _@note: improve itemscope embedding process, but without using JS, how..?_
 
 > Expand the social media types
 
+> Entity encode custom meta `ExtraMeta` based on charset selection
+
 ---
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
