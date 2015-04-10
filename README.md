@@ -27,10 +27,14 @@ Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 Remove extraneous metadata from your `$ThemeDir()/templates/*Page.ss` templates.
 
-Call `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
+2 call are necessary:
+
++ `$Metahead()` inside the opening `<head>` tag
+
++ `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
 
 ```html
-<head>
+<head$Metahead()>
 $BaseHref()
 $Metadata()
 <!-- ++ any further includes -->
@@ -40,7 +44,7 @@ $Metadata()
 Will output something along the lines of:
 
 ```html
-<head>
+<head itemscope itemtype="http://schema.org/Article" >
 <base href="http://ssseo.silverstripe.org/">
 <!-- SSSEO -->
 <!-- HTML -->
@@ -173,15 +177,7 @@ To enable Schema.org functionality, include:
 
 > SSSEO_SchemaDotOrg_SiteTree_DataExtension
 
-Please also include a call to`$Metahead()` inside the `<head>` tag of any-and-all relevant`$ThemeDir()/templates/*Page.ss` templates, like so:
-
-```html
-<head $Metahead() >
-$BaseHref()
-$Metadata()
-<!-- ++ any further includes -->
-</head>
-```
+Please note that`$Metahead()` inside the `<head>` tag is required for this to work correctly.
 
 This will output the correct Schama.org **_itemscope_** into the head tag.
 
