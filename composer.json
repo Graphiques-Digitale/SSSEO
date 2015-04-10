@@ -6,7 +6,7 @@
   "keywords": ["silverstripe", "SEO", "metadata"],
   "license": "GNU-GPL-v2",
   "authors": [
-    {"name": "Atari","email": "atari@graphiques.co.za"}
+    {"name": "Atari","email": "atari@graphiquesdigitale.net"}
   ],
   "support": {
     "issues": "http://github.com/Graphiques-Digitale/SSSEO/issues"
@@ -16,7 +16,7 @@
     "silverstripe/framework": "~3.1"
   },
   "extra": {
-    "installer-name": "SilverstripeReconMetadata",
+    "installer-name": "SSSEO",
     "screenshots": [
       "composer-screenshot.png"
     ]
