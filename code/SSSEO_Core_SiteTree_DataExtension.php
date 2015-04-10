@@ -136,7 +136,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		// Title
 		if ($config->TitleEnabled()) {
-			$metadata .= '<title>' . htmlentities($self->MetaTitle(), ENT_QUOTES, $config->Charset) . '</title>' . PHP_EOL;
+			$metadata .= '<title>' . $self->MetaTitle() . '</title>' . PHP_EOL;
 		}
 
 		// Description
