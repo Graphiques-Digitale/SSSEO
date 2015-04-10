@@ -62,7 +62,7 @@ class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
 				TextField::create('SchemaDotOrgTitle', 'itemprop name')
 					->setAttribute('placeholder', $self->Title),
 				TextareaField::create('SchemaDotOrgDescription', 'itemprop description')
-					->setAttribute('placeholder', $self->MetaDescription),
+					->setAttribute('placeholder', $self->MetaDescription()),
 				UploadField::create('SchemaDotOrgImage', 'itemprop image')
 					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
 					->setFolderName('SSSEO/SchemaDotOrg/')
@@ -113,7 +113,7 @@ class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
 
 			//// Description
 
-			$description = ($self->SchemaDotOrgDescription) ? $self->SchemaDotOrgDescription : $self->MetaDescription;
+			$description = ($self->SchemaDotOrgDescription) ? $self->SchemaDotOrgDescription : $self->MetaDescription();
 			$metadata .= $self->MarkupSchema('description', $description, true, $config->Charset);
 
 			//// Image
