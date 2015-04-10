@@ -21,7 +21,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	 ------------------------------------------------------------------------------*/
 
 	private static $db = array(
-		// HTML
+		'MetaTitle' => 'Varchar(128)',
 		'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
 		'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
 	);
@@ -51,38 +51,41 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		$tab = 'Root.SSSEO.FullOutput';
 
 		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
-			if ($itemscope = $self->SchemaDotOrgItemscope()) {
+			if ($head = $self->Metahead()) {
 				$fields->addFieldsToTab($tab, array(
-					LiteralField::create('LiteralItemscope', '<pre style="font-weight: bold;">' . nl2br(htmlentities('<head' . $itemscope . '>')) . '</pre>')
+					LiteralField::create('HeaderMetahead', '<pre class="bold">$Metahead()</pre>'),
+					LiteralField::create('LiteralMetahead', '<pre><span style="background-color: white;">' . htmlentities($head) . '</span></pre>')
 				));
 			}
 		}
 		$fields->addFieldsToTab($tab, array(
-			LiteralField::create('LiteralFullOutput', '<pre>' . nl2br(htmlentities($self->Metadata(), ENT_QUOTES)) . '</pre>')
+			LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
+			LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($self->Metadata()), ENT_QUOTES)) . '</pre>')
 		));
 
 		//// Metadata
 
 		$tab = 'Root.SSSEO.Metadata';
 
-		// MetaCanonical
+		// Canonical
 		if ($config->CanonicalEnabled()) {
 			$fields->addFieldsToTab($tab, array(
-				ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $self->MetaCanonical())
+				ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $self->AbsoluteLink())
 			));
 		}
 
-		// MetaTitle
+		// Title
 		if ($config->TitleEnabled()) {
 			$fields->addFieldsToTab($tab, array(
-				ReadonlyField::create('ReadonlyMetaTitle', 'meta title', $self->MetaTitle())
+				TextField::create('MetaTitle', 'meta title')
+					->setAttribute('placeholder', $self->GenerateTitle())
 			));
 		}
 
-		// MetaDescription
+		// Description
 		$fields->addFieldsToTab($tab, array(
 			TextareaField::create('MetaDescription', 'meta description')
-				->setAttribute('placeholder', $self->MetaContent())
+				->setAttribute('placeholder', $self->GenerateDescriptionFromContent())
 		));
 
 		// ExtraMeta
@@ -112,6 +115,24 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
+	 * @name Metahead
+	 */
+	public function Metahead() {
+
+		$self = $this->owner;
+		$metadata = '';
+
+		//// Schema.org
+
+		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
+			$metadata .= $self->SchemaDotOrgItemscope();
+		}
+
+		return $metadata;
+
+	}
+
+	/**
 	 * @name Metadata
 	 */
 	public function Metadata() {
@@ -131,16 +152,19 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		// Canonical
 		if ($config->CanonicalEnabled()) {
-			$metadata .= $self->MarkupRel('canonical', $self->MetaCanonical());
+			$metadata .= $self->MarkupRel('canonical', $self->AbsoluteLink());
 		}
 
 		// Title
 		if ($config->TitleEnabled()) {
-			$metadata .= '<title>' . $self->MetaTitle() . '</title>' . PHP_EOL;
+
+			$title = ($self->MetaTitle) ? $self->MetaTitle : $self->GenerateTitle();
+			$metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset) . '</title>' . PHP_EOL;
+
 		}
 
 		// Description
-		$metadata .= $self->Markup('description', $self->MetaDescription(), true, $config->Charset);
+		$metadata .= $self->Markup('description', $self->GenerateDescription(), true, $config->Charset);
 
 		// Favicon
 		if ($config->FaviconEnabled()) {
@@ -260,9 +284,9 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		//// ExtraMeta
 
 		if ($config->ExtraMetaEnabled()) {
-			if ($extraMeta = $this->MetaExtraMeta()) {
+			if ($extraMeta = $self->ExtraMeta != '') {
 				$metadata .= $self->MarkupHeader('Extra Metadata');
-				$metadata .= $this->MetaExtraMeta() . PHP_EOL;
+				$metadata .= $this->ExtraMeta . PHP_EOL;
 			}
 		}
 
@@ -342,32 +366,11 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
-	 * @name MetaCharset
-	 */
-	public function MetaCharset() {
-
-		// variables
-		$config = SiteConfig::current_site_config();
-
-		//
-		return $config->Charset;
-
-	}
-
-	/**
-	 * @name MetaCanonical
-	 */
-	public function MetaCanonical() {
-
-		return $this->owner->AbsoluteLink();
-
-	}
-
-	/**
 	 * @name MetaTitle
-	 * default limit: 70 characters
 	 */
-	public function MetaTitle($length = 70) {
+	public function GenerateTitle() {
+
+		$self = $this->owner;
 
 		// variables
 		$config = SiteConfig::current_site_config();
@@ -381,8 +384,8 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			array_push($titles, $titleSeparator);
 		}
 		// Title
-		if ($this->owner->Title) {
-			array_push($titles, $this->owner->Title);
+		if ($self->Title) {
+			array_push($titles, $self->Title);
 		}
 		// Tagline
 		if ($config->Tagline) {
@@ -401,23 +404,32 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		$title = implode(' ', $titles);
 
 		// return
-// 			return substr($title, 0, $length);
 		return $title;
 
 	}
 
 	/**
-	 * @name MetaContent
-	 * no limit
-	 *
-	 * returns first paragraph of page content
+	 * @name GenerateDescription
+	 * default limit: 155 characters
 	 */
-	public function MetaContent() {
+	public function GenerateDescription() {
 
 		//
-		$content = null;
+		if ($this->owner->MetaDescription) {
+			return $description = $this->owner->MetaDescription;
+		} else {
+			return $this->owner->GenerateDescriptionFromContent();
+		}
 
-		// content
+	}
+
+	/**
+	 * @name GenerateDescription
+	 * default limit: 155 characters
+	 */
+	public function GenerateDescriptionFromContent() {
+
+		// pillage content
 		if ($content = trim($this->owner->Content)) {
 			if (preg_match( '/<p>(.*?)<\/p>/i', $content, $match)) {
 				$content = $match[0];
@@ -425,52 +437,11 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				$content = explode("\n", $content);
 				$content = $content[0];
 			}
-		}
-
-		// return
-		if ($content) {
-			// found - strip & decode value
-			return html_entity_decode(strip_tags($content));
+			return trim(html_entity_decode(strip_tags($content)));
 		} else {
-			// not found
 			return false;
 		}
 
-	}
-
-	/**
-	 * @name MetaDescription
-	 * default limit: 155 characters
-	 */
-	public function MetaDescription($length = 155) {
-
-		$description = null;
-
-		//
-		if ($this->owner->MetaDescription) {
-			$description = $this->owner->MetaDescription;
-		} else {
-			$description = $this->MetaContent();
-		}
-
-		// return
-		if ($description) {
-			// found - truncate value
-// 			return substr($description, 0, $length);
-			return $description;
-		} else {
-			// not found
-			return false;
-		}
-
-	}
-
-	/**
-	 * @name MetaExtraMeta
-	 */
-	public function MetaExtraMeta() {
-
-		return $this->owner->ExtraMeta;
 
 	}
 

@@ -45,5 +45,10 @@
 }
 
 .cms-edit-form pre {
-	font: 10px monospace; 
+	font: 10px monospace;
+	white-space: pre-wrap;
+}
+.cms-edit-form pre.bold {
+	margin: 2em 0;
+	font-weight: bold !important;
 }

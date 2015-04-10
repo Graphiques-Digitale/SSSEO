@@ -52,19 +52,12 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 					->setAttribute('placeholder', $self->Title),
 				ReadonlyField::create('ReadonlyOpenGraphURL', 'og:url', $self->AbsoluteLink()),
 				TextareaField::create('OpenGraphDescription', 'og:description')
-					->setAttribute('placeholder', $self->MetaDescription()),
+					->setAttribute('placeholder', $self->GenerateDescription()),
 				UploadField::create('OpenGraphImage', 'og:image')
 					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
 					->setFolderName('SSSEO/OpenGraph/')
 					->setDescription('file format: JPG, PNG, GIF<br />pixel dimensions: 1200 x 630')
 			));
-			//
-// 			if ($self->hasExtension('SSSEO_Authorship_SiteTree_DataExtension')
-// 					&& $config->hasExtension('SSSEO_Authorship_SiteConfig_DataExtension')
-// 					&& Member::has_extension('SSSEO_Authorship_Member_DataExtension'))
-// 			{
-
-// 			}
 		} else {
 			//
 			$tabset = $fields->findOrMakeTab($tab);
@@ -109,7 +102,7 @@ class SSSEO_OpenGraph_SiteTree_DataExtension extends DataExtension {
 
 			//// Description
 
-			$description = ($self->OpenGraphDescription) ? $self->OpenGraphDescription : $self->MetaDescription();
+			$description = ($self->OpenGraphDescription) ? $self->OpenGraphDescription : $self->GenerateDescription();
 			$metadata .= $self->MarkupFacebook('og:description', $description, true, $config->Charset);
 
 			//// Image

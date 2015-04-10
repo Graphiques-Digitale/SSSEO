@@ -55,7 +55,7 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 					->setAttribute('placeholder', $self->Title),
 				ReadonlyField::create('ReadonlyTwitterCardsURL', 'twitter:url', $self->AbsoluteLink()),
 				TextareaField::create('TwitterCardsDescription', 'twitter:description')
-					->setAttribute('placeholder', $self->MetaDescription()),
+					->setAttribute('placeholder', $self->GenerateDescription()),
 				UploadField::create('TwitterCardsImage', 'twitter:image')
 					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
 					->setFolderName('SSSEO/TwitterCards/')
@@ -108,7 +108,7 @@ class SSSEO_TwitterCards_SiteTree_DataExtension extends DataExtension {
 			//// Description
 
 			// default to SiteTree::$Description
-			$description = ($self->TwitterCardsDescription) ? $self->TwitterCardsDescription : $self->MetaDescription();
+			$description = ($self->TwitterCardsDescription) ? $self->TwitterCardsDescription : $self->GenerateDescription();
 			$metadata .= $self->MarkupTwitter('twitter:description', $description, true, $config->Charset);
 
 			//// Image
