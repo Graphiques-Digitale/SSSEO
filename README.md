@@ -173,10 +173,10 @@ To enable Schema.org functionality, include:
 
 > SSSEO_SchemaDotOrg_SiteTree_DataExtension
 
-Please also include a call to`$SchemaDotOrgItemscope()` inside the `<head>` tag of any-and-all relevant`$ThemeDir()/templates/*Page.ss` templates, like so:
+Please also include a call to`$Metahead()` inside the `<head>` tag of any-and-all relevant`$ThemeDir()/templates/*Page.ss` templates, like so:
 
 ```html
-<head $SchemaDotOrgItemscope()>
+<head $Metahead() >
 $BaseHref()
 $Metadata()
 <!-- ++ any further includes -->
