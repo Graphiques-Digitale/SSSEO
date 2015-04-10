@@ -27,14 +27,10 @@ Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 Remove extraneous metadata from your `$ThemeDir()/templates/*Page.ss` templates.
 
-2 call are necessary:
-
-+ `$Metahead()` inside the opening `<head>` tag
-
-+ `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
+Call `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.
 
 ```html
-<head$Metahead()>
+<head>
 $BaseHref()
 $Metadata()
 <!-- ++ any further includes -->
@@ -44,7 +40,7 @@ $Metadata()
 Will output something along the lines of:
 
 ```html
-<head itemscope itemtype="http://schema.org/Article" >
+<head>
 <base href="http://ssseo.silverstripe.org/">
 <!-- SSSEO -->
 <!-- HTML -->
