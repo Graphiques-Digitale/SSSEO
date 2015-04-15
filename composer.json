@@ -1,5 +1,5 @@
 {
-  "name": "graphiques-digitale/ssseo",
+  "name": "graphiquesdigitale/ssseo",
   "description": "Advanced metadata configuration & output for the Silverstripe v3.1 CMS & framework",
   "type": "silverstripe-module",
   "homepage": "http://github.com/Graphiques-Digitale/SSSEO",
@@ -13,8 +13,8 @@
   },
   "require": {
 	"php": ">=5.3.2",
-    "silverstripe/cms": "3.1.*",
-    "silverstripe/framework": "3.1.*"
+    "silverstripe/cms": "~3.1",
+    "silverstripe/framework": "~3.1"
   },
   "extra": {
     "installer-name": "ssseo",
