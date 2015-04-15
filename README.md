@@ -21,6 +21,8 @@ Place the SSSEO folder in your SilverStripe root and run `~/dev/build/?flush=ALL
 
 Configuration is modular and managed via extensions in the `~/SSSEO/_config/config.yml` file.
 
+Copy the `~/SSSEO/_config/config.yml` file into your `~/mysite/_config/` folder to enable submodules, or they will be disabled every time you update SSSEO. The information will however remain even if submodules are removed, so if you forget, it's not the end of the world - simply re-enable whichever modules.
+
 Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
 ## 3. Template Usage
@@ -183,17 +185,7 @@ _@note: improve itemscope embedding process, but without using JS, how..?_
 
 [Google+ Web Snippet][10]
 
-## 4. Short-term @TODO
 
-> PHPDoc the code :(
-
-> More help and links in the CMS interface, specifically linking to image documentation
-
-> Expand the social media types
-
-> Entity encode custom meta `ExtraMeta` based on charset selection
-
----
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013
 [2]: http://www.silverstripe.org/blog/5-tips-for-seo-with-silverstripe-3-/
