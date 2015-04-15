@@ -19,9 +19,9 @@ Place the SSSEO folder in your SilverStripe root and run `~/dev/build/?flush=ALL
 
 ## 2. Configuration
 
-Configuration is modular and managed via extensions in the `~/SSSEO/_config/config.yml` file.
+Configuration is modular and all extensions are viewable in the `~/SSSEO/_config/config.yml` file.
 
-Copy the `~/SSSEO/_config/config.yml` file into your `~/mysite/_config/` folder to enable submodules, or they will be disabled every time you update SSSEO. The information will however remain even if submodules are removed, so if you forget, it's not the end of the world - simply re-enable whichever modules.
+All extensions except core ship disabled, please enable additional extensions (submodules) by copying and pasting relevant items into your `~/mysite/_config/config.tml` folder and uncommenting them.
 
 Remember to `~/dev/build/?flush=ALL` if you modify any YAML files.
 
