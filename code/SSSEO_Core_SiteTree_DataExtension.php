@@ -288,7 +288,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 		if ($config->ExtraMetaEnabled()) {
 			if ($extraMeta = $self->ExtraMeta != '') {
 				$metadata .= $self->MarkupHeader('Extra Metadata');
-				$metadata .= $this->ExtraMeta . PHP_EOL;
+				$metadata .= $self->ExtraMeta . PHP_EOL;
 			}
 		}
 
