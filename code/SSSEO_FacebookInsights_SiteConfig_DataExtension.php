@@ -56,12 +56,11 @@ class SSSEO_FacebookInsights_SiteConfig_DataExtension extends DataExtension {
 
 		// variables
 		$config = $this->owner;
-		$metadata = '';
 
 		// Facebook App ID
 		if ($config->FacebookAppID) {
 
-			$metadata .= $page->MarkupHeader('Facebook Insights');
+			$metadata = $page->MarkupHeader('Facebook Insights');
 			$metadata .= $page->MarkupFacebook('fb:app_id', $config->FacebookAppID, false);
 
 			// Admins (if App ID)
@@ -71,10 +70,9 @@ class SSSEO_FacebookInsights_SiteConfig_DataExtension extends DataExtension {
 				}
 			}
 
-		}
+			return $metadata;
 
-		//
-		return $metadata;
+		}	return false;
 
 	}
 
