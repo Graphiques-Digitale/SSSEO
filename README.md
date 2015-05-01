@@ -37,7 +37,7 @@ Remove extraneous metadata from your `$ThemeDir()/templates/*Page.ss` templates.
 
 ```html
 <head$Metahead()>
-$BaseHref()
+<% base_tag %>
 $Metadata()
 <!-- ++ any further includes -->
 </head>
