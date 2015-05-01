@@ -1,8 +1,8 @@
 SiteConfig:
   extensions:
     - 'SSSEO_Core_SiteConfig_DataExtension'
-#    - 'SSSEO_TouchIcon_SiteConfig_DataExtension'
-#    - 'SSSEO_FacebookInsights_SiteConfig_DataExtension'
+    - 'SSSEO_TouchIcon_SiteConfig_DataExtension'
+    - 'SSSEO_FacebookInsights_SiteConfig_DataExtension'
     
 LeftAndMain:
   extensions:
@@ -11,13 +11,13 @@ LeftAndMain:
 Member:
   extensions:
     - 'SSSEO_Core_Member_DataExtension'
-#    - 'SSSEO_FacebookInsights_Member_DataExtension'
+    - 'SSSEO_FacebookInsights_Member_DataExtension'
     
 SiteTree:
   extensions:
     - 'SSSEO_Core_SiteTree_DataExtension'
-#    - 'SSSEO_OpenGraph_SiteTree_DataExtension'
-#    - 'SSSEO_TwitterCards_SiteTree_DataExtension'
-#    - 'SSSEO_SchemaDotOrg_SiteTree_DataExtension'
+    - 'SSSEO_OpenGraph_SiteTree_DataExtension'
+    - 'SSSEO_TwitterCards_SiteTree_DataExtension'
+    - 'SSSEO_SchemaDotOrg_SiteTree_DataExtension'
 
 # after adding or removing modules remember to run: /dev/build/?flush=ALL
