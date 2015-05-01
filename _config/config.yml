@@ -17,7 +17,7 @@ SiteTree:
   extensions:
     - 'SSSEO_Core_SiteTree_DataExtension'
     - 'SSSEO_OpenGraph_SiteTree_DataExtension'
-    - 'SSSEO_TwitterCards_SiteTree_DataExtension'
-    - 'SSSEO_SchemaDotOrg_SiteTree_DataExtension'
+#    - 'SSSEO_TwitterCards_SiteTree_DataExtension'
+#    - 'SSSEO_SchemaDotOrg_SiteTree_DataExtension'
 
 # after adding or removing modules remember to run: /dev/build/?flush=ALL
