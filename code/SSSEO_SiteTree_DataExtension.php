@@ -14,18 +14,34 @@
  *
  */
 
-class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
+class SSSEO_SiteTree_DataExtension extends DataExtension {
 
 
 	/* Overload Variable
 	 ------------------------------------------------------------------------------*/
 
 	private static $db = array(
+		//
 		'MetaTitle' => 'Varchar(128)',
 		'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
 		'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
+		//
+		'OpenGraphData' => 'Text',
+		//
+		'TwitterCardsData' => 'Text',
+		//
+		'SchemaDotOrgData' => 'Text',
+	);
+	private static $has_one = array(
+		//
+		'OpenGraphImage' => 'Image',
+		//
+		'TwitterCardsImage' => 'Image',
+		//
+		'SchemaDotOrgImage' => 'Image',
 	);
 	private static $many_many = array(
+		//
 		'Authors' => 'Member',
 	);
 
@@ -95,12 +111,42 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			));
 		}
 
-		//// Authorship
+		//// Open Graph
 
-		$tab = 'Root.SSSEO.Authors';
+		if ($config->OpenGraphEnabled()) {
+
+			$tab = 'Root.SSSEO.OpenGraph';
+
+			$fields->addFieldsToTab($tab, array());
+
+		}
+
+		//// Twitter Cards
+
+		if ($config->TwitterCardsEnabled()) {
+
+			$tab = 'Root.SSSEO.TwitterCards';
+
+			$fields->addFieldsToTab($tab, array());
+
+		}
+
+		//// Schema.org
+
+		if ($config->SchemaDotOrgEnabled()) {
+
+			$tab = 'Root.SSSEO.SchemaDotOrg';
+
+			$fields->addFieldsToTab($tab, array());
+
+		}
+
+		//// Authorship
 
 		// Authors
 		if ($config->AuthorshipEnabled()) {
+
+			$tab = 'Root.SSSEO.Authors';
 
 			$fields->addFieldsToTab($tab, array(
 			GridField::create('Authors', 'Authors', $self->Authors())
@@ -201,7 +247,7 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 			// ICO only
 			else {
 				if ($ico) {
-				$metadata .= $self->MarkupHeader('Favicon');
+					$metadata .= $self->MarkupHeader('Favicon');
 					$metadata .= $self->MarkupRel('shortcut icon', '/favicon.ico');
 				}
 			}
@@ -210,52 +256,53 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 
 		//// Touch Icon
 
-		if ($config->hasExtension('SSSEO_TouchIcon_SiteConfig_DataExtension')) {
-			$metadata .= $config->TouchIconMetadata($self);
-		}
+		if ($config->TouchIconEnabled()) {
 
-		//// Facebook Insights
+			$image = $config->TouchIconImage();
 
-		if ($config->hasExtension('SSSEO_FacebookInsights_SiteConfig_DataExtension')) {
-			$metadata .= $config->FacebookInsightsMetadata($self);
-		}
+			if ($image->exists()) {
 
-		//// Open Graph
+				// variables
+				$metadata .= $self->MarkupHeader('Touch Icon');
 
-		if ($self->hasExtension('SSSEO_OpenGraph_SiteTree_DataExtension')) {
-			$metadata .= $self->OpenGraphMetadata();
-		}
+				// 192 x 192
+// 				$metadata .= '<!-- For Chrome for Android: -->';
+				$metadata .= '<link rel="icon" sizes="192x192" href="' . $image->SetSize(192, 192)->getAbsoluteURL() . '">' . PHP_EOL;
 
-		// Facebook Authorship
-		if ($config->AuthorshipEnabled()) {
+				// 180 x 180
+// 				$metadata .= '<!-- For iPhone 6 Plus with @3× display: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="180x180" href="' . $image->SetSize(180, 180)->getAbsoluteURL() . '">' . PHP_EOL;
 
-			$authors = $self->Authors();
-			$metadata .= $self->MarkupHeader('Facebook Authorship');
+				// 152 x 152
+// 				$metadata .= '<!-- For iPad with @2× display running iOS ≥ 7: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="152x152" href="' . $image->SetSize(152, 152)->getAbsoluteURL() . '">' . PHP_EOL;
 
-			// Facebook Authors
-			foreach ($authors as $author) {
-				if ($author->FacebookProfileID) {
-					$metadata .= $self->MarkupFacebook('article:author', $author->FacebookProfileID, false);
-				}
+				// 144 x 144
+// 				$metadata .= '<!-- For iPad with @2× display running iOS ≤ 6: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . $image->SetSize(144, 144)->getAbsoluteURL() . '">' . PHP_EOL;
+
+				// 120 x 120
+// 				$metadata .= '<!-- For iPhone with @2× display running iOS ≥ 7: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="120x120" href="' . $image->SetSize(120, 120)->getAbsoluteURL() . '">' . PHP_EOL;
+
+				// 114 x 114
+// 				$metadata .= '<!-- For iPhone with @2× display running iOS ≤ 6: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $image->SetSize(114, 114)->getAbsoluteURL() . '">' . PHP_EOL;
+
+				// 76 x 76
+// 				$metadata .= '<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="76x76" href="' . $image->SetSize(76, 76)->getAbsoluteURL() . '">' . PHP_EOL;
+
+				// 72 x 72
+// 				$metadata .= '<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $image->SetSize(72, 72)->getAbsoluteURL() . '">' . PHP_EOL;
+
+				// 57 x 57
+// 				$metadata .= '<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->';
+				$metadata .= '<link rel="apple-touch-icon-precomposed" href="' . $image->SetSize(57, 57)->getAbsoluteURL() . '"><!-- 57×57px -->' . PHP_EOL;
+
 			}
 
-			// Facebook Publisher
-			if ($config->FacebookProfileID) {
-				$metadata .= $self->MarkupFacebook('article:publisher', $config->FacebookProfileID, false);
-			}
-
-		}
-
-		//// Twitter Cards
-
-		if ($self->hasExtension('SSSEO_TwitterCards_SiteTree_DataExtension')) {
-			$metadata .= $self->TwitterCardsMetadata();
-		}
-
-		//// Schema.org
-
-		if ($self->hasExtension('SSSEO_SchemaDotOrg_SiteTree_DataExtension')) {
-			$metadata .= $self->SchemaDotOrgMetadata();
 		}
 
 		// Google+ Authorship
@@ -281,6 +328,45 @@ class SSSEO_Core_SiteTree_DataExtension extends DataExtension {
 				$metadata .= $self->MarkupRel('publisher', $profile);
 			}
 
+		}
+
+		//// Facebook Insights
+
+		if ($config->FacebookInsightsEnabled()) {
+
+			// Facebook App ID
+			if ($config->FacebookAppID) {
+
+				$metadata .= $self->MarkupHeader('Facebook Insights');
+				$metadata .= $self->MarkupFacebook('fb:app_id', $config->FacebookAppID, false);
+
+				// Admins (if App ID)
+				foreach ($config->FacebookAdmins() as $admin) {
+					if ($admin->FacebookProfileID) {
+						$metadata .= $self->MarkupFacebook('fb:admins', $admin->FacebookProfileID, false);
+					}
+				}
+
+			}
+
+		}
+
+		//// Open Graph
+
+		if ($config->OpenGraphEnabled()) {
+// 			$metadata .= $self->OpenGraphMetadata();
+		}
+
+		//// Twitter Cards
+
+		if ($config->TwitterCardsEnabled()) {
+// 			$metadata .= $self->TwitterCardsMetadata();
+		}
+
+		//// Schema.org
+
+		if ($config->SchemaDotOrgEnabled()) {
+// 			$metadata .= $self->SchemaDotOrgMetadata();
 		}
 
 		//// ExtraMeta

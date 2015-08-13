@@ -14,7 +14,7 @@
  *
  */
 
-class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
+class SSSEO_SiteConfig_DataExtension extends DataExtension {
 
 
 	/* Overload Model
@@ -31,8 +31,18 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 		'TitleStatus' => 'Enum(array("off", "on"), "on")', // default: on
 		// Favicon
 		'FaviconStatus' => 'Enum(array("off", "on"), "on")', // default: on
+		// Favicon
+		'TouchIconStatus' => 'Enum(array("off", "on"), "on")', // default: on
 		// Authorship
 		'AuthorshipStatus' => 'Enum(array("off", "on"), "off")', // default: off
+		// Facebook Insights
+		'FacebookInsightsStatus' => 'Enum(array("off", "on"), "off")', // default: off
+		// Open Graph
+		'OpenGraphStatus' => 'Enum(array("off", "on"), "off")', // defaults: off
+		// Twitter Cards
+		'TwitterCardsStatus' => 'Enum(array("off", "on"), "off")', // defaults: off
+		// Schema.org
+		'SchemaDotOrgStatus' => 'Enum(array("off", "on"), "off")', // defaults: off
 		// ExtraMeta
 		'ExtraMetaStatus' => 'Enum(array("off", "on"), "off")', // default: off
 
@@ -47,51 +57,28 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 		'TitlePosition' => 'Enum(array("first", "last"), "first")',
 		// Favicon
 		'FaviconBG' => 'Varchar(6)',
-		// Authorship
+
+		//// Authorship
 		'GoogleProfileID' => 'Varchar(128)',
 		'FacebookProfileID' => 'Varchar(128)',
+
+		//// Facebook Insights
+		// Application ID
+		'FacebookAppID' => 'Varchar(128)',
 
 	);
 	private static $has_one = array(
 		// Favicon
 		'FaviconPNG' => 'Image',
+		// Touch Icon
+		'TouchIconImage' => 'Image',
 	);
 
-	// Require Default Records
-	// public function requireDefaultRecords() {
-//
-		// //
-		// parent::requireDefaultRecords();
-//
-		// //
-		// $data = ReconMetadataDataObject::get()->byID(1);
-		// if (!$data) {
-//
-			// // create default object
-			// $default = new ReconMetadataDataObject();
-			// $default->MetaDescription = "Hello :)";
-			// $id = $default->write();
-//
-			// //
-			// DB::alteration_message("ReconMetadata -> default is = $id", "created");
-//
-			// // assign to $this
-			// // need to get siteconfig statically to prevent database wierdness
-			// $config = SiteConfig::current_site_config();
-			// // $config->ReconMetadata()->add($default);
-			// $config->ReconMetadataID = $id;
-			// $config->write();
-//
-			// //
-			// DB::alteration_message("ReconMetadata -> created default object", "created");
-//
-		// } else {
-//
-			// // ??
-//
-		// }
-//
-	// }
+	private static $has_many = array(
+		//// Facebook Insights
+		// Facebook Administrators
+		'FacebookAdmins' => 'Member',
+	);
 
 
 	/* Overload Methods
@@ -122,9 +109,24 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 			// Favicon
 			DropdownField::create('FaviconStatus', 'Favicon', $owner->dbObject('FaviconStatus')->enumValues())
 				->setDescription('enable enhanced PNG favicon output for modern browsers ...and IE'),
-			// ExtraMeta
+			// Touch Icon
+			DropdownField::create('TouchIconStatus', 'Touch Icon', $owner->dbObject('TouchIconStatus')->enumValues())
+				->setDescription('enable touch icons for desktop shortcuts and browser dashboards'),
+			// Authorship
 			DropdownField::create('AuthorshipStatus', 'Authorship', $owner->dbObject('AuthorshipStatus')->enumValues())
 				->setDescription('enable authorship of pages'),
+			// Facebook Insights
+			DropdownField::create('FacebookInsightsStatus', 'Facebook Insights', $owner->dbObject('FacebookInsightsStatus')->enumValues())
+				->setDescription('enable Facebook Insights (Facebook Application)'),
+			// Open Graph
+			DropdownField::create('OpenGraphStatus', 'Open Graph', $owner->dbObject('OpenGraphStatus')->enumValues())
+				->setDescription('enable Open Graph'),
+			// Twitter Cards
+			DropdownField::create('TwitterCardsStatus', 'Twitter Cards', $owner->dbObject('TwitterCardsStatus')->enumValues())
+				->setDescription('enable Twitter Cards'),
+			// Schema.org
+			DropdownField::create('SchemaDotOrgStatus', 'Schema.org', $owner->dbObject('SchemaDotOrgStatus')->enumValues())
+				->setDescription('enable Schema.org'),
 			// ExtraMeta
 			DropdownField::create('ExtraMetaStatus', 'Custom Metadata', $owner->dbObject('ExtraMetaStatus')->enumValues())
 				->setDescription('allow custom metadata on pages<br />please ensure metadata content is entity encoded!') // @todo entity encode content="%s"
@@ -199,19 +201,44 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 
 		}
 
-		//// Publisher
+		//// Touch Icon
+
+		$tab = 'Root.SSSEO.TouchIcon';
+
+		$fields->addFieldsToTab($tab, array(
+			ReadonlyField::create('AppleTouchIconPrecomposed', 'apple-touch-icon-precomposed', 'on'),
+			UploadField::create('TouchIconImage', 'Touch Icon Image')
+				->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
+				->setFolderName('SSSEO/TouchIcon/')
+				->setDescription('file format: JPG, PNG, GIF<br />pixel dimensions: 400 x 400 (recommended, minimum 192)<br />pixel ratio: 1:1')
+		));
+
+		//// Facebook Insights
+
+		if ($this->FacebookInsightsEnabled()) {
+
+			$tab = 'Root.SSSEO.FacebookInsights';
+
+			// add
+			$fields->addFieldsToTab($tab, array(
+				TextField::create('FacebookAppID', 'Facebook Application ID'),
+				GridField::create('FacebookAdmins', 'Facebook Administrators', $this->owner->FacebookAdmins())
+					->setConfig(GridFieldConfig_RelationEditor::create())
+			));
+
+		}
+
+		//// Authorship
 
 		if ($this->AuthorshipEnabled()) {
 
-			$tab = 'Root.SSSEO.Publisher';
+			$tab = 'Root.SSSEO.Authorship';
 
 			// add fields
 			$fields->addFieldsToTab($tab, array(
 				TextField::create('GoogleProfileID', 'Google+ Profile ID'),
 				TextField::create('FacebookProfileID', 'Facebook Profile ID')
 			));
-
-
 
 		}
 
@@ -269,10 +296,36 @@ class SSSEO_Core_SiteConfig_DataExtension extends DataExtension {
 	}
 
 	//
+	public function TouchIconEnabled() {
+		return ($this->owner->TouchIconStatus == 'off') ? false : true;
+	}
+
+	//
 	public function AuthorshipEnabled() {
 		return ($this->owner->AuthorshipStatus == 'off') ? false : true;
 	}
 
+	//
+	public function FacebookInsightsEnabled() {
+		return ($this->owner->FacebookInsightsStatus == 'off') ? false : true;
+	}
+
+	//
+	public function OpenGraphEnabled() {
+		return ($this->owner->OpenGraphStatus == 'off') ? false : true;
+	}
+
+	//
+	public function TwitterCardsEnabled() {
+		return ($this->owner->TwitterCardsStatus == 'off') ? false : true;
+	}
+
+	//
+	public function SchemaDotOrgEnabled() {
+		return ($this->owner->SchemaDotOrgStatus == 'off') ? false : true;
+	}
+
+	//
 	public function ExtraMetaEnabled() {
 		return ($this->owner->ExtraMetaStatus == 'off') ? false : true;
 	}

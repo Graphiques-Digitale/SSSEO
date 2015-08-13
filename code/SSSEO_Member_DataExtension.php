@@ -14,7 +14,7 @@
  *
  */
 
-class SSSEO_Core_Member_DataExtension extends DataExtension {
+class SSSEO_Member_DataExtension extends DataExtension {
 
 	/* Overload Variable
 	 ------------------------------------------------------------------------------*/
@@ -24,6 +24,9 @@ class SSSEO_Core_Member_DataExtension extends DataExtension {
 		'GoogleProfileID' => 'Varchar(128)',
 		// Author Facebook ID
 		'FacebookProfileID' => 'Varchar(128)',
+	);
+	private static $has_one = array(
+		'FacebookAdmin' => 'SiteConfig',
 	);
 	private static $many_many = array(
 		// pages authored
@@ -48,6 +51,16 @@ class SSSEO_Core_Member_DataExtension extends DataExtension {
 			TextField::create('GoogleProfileID', 'Google+ Profile ID'),
 			TextField::create('FacebookProfileID', 'Facebook Profile ID')
 		));
+
+		/**
+		 * @TODO ???
+		 */
+		// Facebook Administrators
+// 		$tab = 'Root.SSSEO.Configuration';
+// 		$fields->addFieldsToTab($tab, array(
+// 			GridField::create('FacebookAdmin', 'Facebook Administrator', $this->owner->FacebookAdmin())
+// 				->setConfig(GridFieldConfig_RelationEditor::create())
+// 		));
 
 		// Pages Authored
 		// remove

@@ -14,7 +14,7 @@
  *
  */
 
-class SSSEO_Core_LeftAndMain_DataExtension extends DataExtension {
+class SSSEO_LeftAndMain_DataExtension extends DataExtension {
 
 	//
 	function init() {
