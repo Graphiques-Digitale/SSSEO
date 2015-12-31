@@ -14,11 +14,12 @@
  *
  */
 
-class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
+class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension
+{
 
-	//// Model Variables
-	private static $db = array(
-		'SchemaDotOrgType' => 'Enum(array(
+    //// Model Variables
+    private static $db = array(
+        'SchemaDotOrgType' => 'Enum(array(
 			"off",
 			"Article",
 			"Blog",
@@ -31,112 +32,106 @@ class SSSEO_SchemaDotOrg_SiteTree_DataExtension extends DataExtension {
 			"Review",
 			"Other"
 		), "Article")',
-		'SchemaDotOrgTitle' => 'Text',
-		'SchemaDotOrgDescription' => 'Text',
-	);
-	private static $has_one = array(
-		'SchemaDotOrgImage' => 'Image',
-	);
+        'SchemaDotOrgTitle' => 'Text',
+        'SchemaDotOrgDescription' => 'Text',
+    );
+    private static $has_one = array(
+        'SchemaDotOrgImage' => 'Image',
+    );
 
 
-	/* Overload Methods
-	------------------------------------------------------------------------------*/
+    /* Overload Methods
+    ------------------------------------------------------------------------------*/
 
-	// CMS Fields
-	public function updateCMSFields(FieldList $fields) {
+    // CMS Fields
+    public function updateCMSFields(FieldList $fields)
+    {
 
-		// vars
-		$config = SiteConfig::current_site_config();
-		$self = $this->owner;
-		$tab = 'Root.SSSEO.SchemaDotOrg';
+        // vars
+        $config = SiteConfig::current_site_config();
+        $self = $this->owner;
+        $tab = 'Root.SSSEO.SchemaDotOrg';
 
-		//// Type
-		$fields->addFieldsToTab($tab, array(
-			DropdownField::create('SchemaDotOrgType', 'itemscope itemtype', $self->dbObject('SchemaDotOrgType')->enumValues()),
-		));
+        //// Type
+        $fields->addFieldsToTab($tab, array(
+            DropdownField::create('SchemaDotOrgType', 'itemscope itemtype', $self->dbObject('SchemaDotOrgType')->enumValues()),
+        ));
 
-		// if NOT off
-		if ($self->SchemaDotOrgType != 'off') {
-			//
-			$fields->addFieldsToTab($tab, array(
-				TextField::create('SchemaDotOrgTitle', 'itemprop name')
-					->setAttribute('placeholder', $self->Title),
-				TextareaField::create('SchemaDotOrgDescription', 'itemprop description')
-					->setAttribute('placeholder', $self->GenerateDescription()),
-				UploadField::create('SchemaDotOrgImage', 'itemprop image')
-					->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
-					->setFolderName('SSSEO/SchemaDotOrg/')
-					->setDescription('file format: JPG, PNG, GIF<br />pixel dimensions for thumbnail: < 400 px wide<br />pixel dimensions for full-bleed image >= 400 px wide<br />Please see <a href="https://developers.google.com/+/web/snippet/article-rendering">Article Rendering</a> for more information.')
-			));
-		} else {
-			//
-			$tabset = $fields->findOrMakeTab($tab);
-			$tabset->addExtraClass('error');
-		}
-
-	}
-
-
-	/* Template Methods
-	------------------------------------------------------------------------------*/
-
-	/**
-	 * @name SchemaDotOrgItemscope
-	 */
-	public function SchemaDotOrgItemscope() {
-
-		$self = $this->owner;
-
-		if ($self->SchemaDotOrgType != 'off') {
-			return ' itemscope itemtype="http://schema.org/' . $self->SchemaDotOrgType . '" ';
-		}
-
-	}
-
-	/**
-	 * @name SchemaDotOrgMetadata
-	 */
-	public function SchemaDotOrgMetadata() {
-
-		$self = $this->owner;
-
-		if ($self->SchemaDotOrgType != 'off') {
-
-			// variables
-			$config = SiteConfig::current_site_config();
-			$metadata = $self->MarkupHeader('Schema.org');
-
-			//// Title
-
-			$title = ($self->SchemaDotOrgTitle) ? $self->SchemaDotOrgTitle : $self->Title;
-			$metadata .= $self->MarkupSchema('name', $title, true, $config->Charset);
-
-			//// Description
-
-			$description = ($self->SchemaDotOrgDescription) ? $self->SchemaDotOrgDescription : $self->GenerateDescription();
-			$metadata .= $self->MarkupSchema('description', $description, true, $config->Charset);
-
-			//// Image
-
-			if ($self->SchemaDotOrgImage()->exists()) {
-				$metadata .= $self->MarkupSchema('image', $self->SchemaDotOrgImage()->getAbsoluteURL(), false);
-			}
-
-			// return
-			return $metadata;
-
-		} else {
-
-			return false;
-
-		}
-
-	}
+        // if NOT off
+        if ($self->SchemaDotOrgType != 'off') {
+            //
+            $fields->addFieldsToTab($tab, array(
+                TextField::create('SchemaDotOrgTitle', 'itemprop name')
+                    ->setAttribute('placeholder', $self->Title),
+                TextareaField::create('SchemaDotOrgDescription', 'itemprop description')
+                    ->setAttribute('placeholder', $self->GenerateDescription()),
+                UploadField::create('SchemaDotOrgImage', 'itemprop image')
+                    ->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif'))
+                    ->setFolderName('SSSEO/SchemaDotOrg/')
+                    ->setDescription('file format: JPG, PNG, GIF<br />pixel dimensions for thumbnail: < 400 px wide<br />pixel dimensions for full-bleed image >= 400 px wide<br />Please see <a href="https://developers.google.com/+/web/snippet/article-rendering">Article Rendering</a> for more information.')
+            ));
+        } else {
+            //
+            $tabset = $fields->findOrMakeTab($tab);
+            $tabset->addExtraClass('error');
+        }
+    }
 
 
-	/* Class Methods
-	------------------------------------------------------------------------------*/
+    /* Template Methods
+    ------------------------------------------------------------------------------*/
 
-	// none
+    /**
+     * @name SchemaDotOrgItemscope
+     */
+    public function SchemaDotOrgItemscope()
+    {
+        $self = $this->owner;
 
+        if ($self->SchemaDotOrgType != 'off') {
+            return ' itemscope itemtype="http://schema.org/' . $self->SchemaDotOrgType . '" ';
+        }
+    }
+
+    /**
+     * @name SchemaDotOrgMetadata
+     */
+    public function SchemaDotOrgMetadata()
+    {
+        $self = $this->owner;
+
+        if ($self->SchemaDotOrgType != 'off') {
+
+            // variables
+            $config = SiteConfig::current_site_config();
+            $metadata = $self->MarkupHeader('Schema.org');
+
+            //// Title
+
+            $title = ($self->SchemaDotOrgTitle) ? $self->SchemaDotOrgTitle : $self->Title;
+            $metadata .= $self->MarkupSchema('name', $title, true, $config->Charset);
+
+            //// Description
+
+            $description = ($self->SchemaDotOrgDescription) ? $self->SchemaDotOrgDescription : $self->GenerateDescription();
+            $metadata .= $self->MarkupSchema('description', $description, true, $config->Charset);
+
+            //// Image
+
+            if ($self->SchemaDotOrgImage()->exists()) {
+                $metadata .= $self->MarkupSchema('image', $self->SchemaDotOrgImage()->getAbsoluteURL(), false);
+            }
+
+            // return
+            return $metadata;
+        } else {
+            return false;
+        }
+    }
+
+
+    /* Class Methods
+    ------------------------------------------------------------------------------*/
+
+    // none
 }
